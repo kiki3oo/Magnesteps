@@ -1,0 +1,16 @@
+{
+  "name": "magnesteps-cod-landing",
+  "version": "1.0.0",
+  "description": "MagneSteps™ Medical Acupressure Insoles - High Converting COD Landing Page",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "landing-page",
+    "cod",
+    "ecommerce"
+  ],
+  "author": "",
+  "license": "ISC"
+}

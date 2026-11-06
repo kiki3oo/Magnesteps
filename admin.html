@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم والإدارة | MagneSteps™ COD Maroc</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            },
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            },
+            dark: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#090d16',
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-tajawal antialiased min-h-screen">
+
+  <!-- ================= AUTHENTICATION MODAL ================= -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 bg-dark-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full border border-slate-200 shadow-2xl text-center">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-4">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h2 class="font-cairo text-xl font-black text-slate-900 mb-1">لوحة تحكم MagneSteps™</h2>
+      <p class="text-xs text-slate-500 mb-6">أدخل الرمز السري للدخول لإدارة الطلبيات</p>
+      
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <input type="password" id="pinInput" placeholder="الرمز السري (الافتراضي: 1234)" autofocus maxlength="8" class="w-full text-center tracking-widest text-lg font-mono py-3 px-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none">
+          <span id="loginError" class="text-xs text-red-500 font-bold mt-1.5 hidden block">الرمز السري غير صحيح، حاول ثانية.</span>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-dark-900 to-slate-900 hover:from-slate-900 hover:to-dark-950 text-amber-400 font-bold py-3 px-4 rounded-xl shadow transition">
+          تسجيل الدخول
+        </button>
+      </form>
+      <p class="text-[10px] text-slate-400 mt-4">رمز الدخول الافتراضي: <strong>1234</strong> (يمكنك تغييره من الإعدادات)</p>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN APP ================= -->
+  <div id="adminApp" class="hidden min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-dark-950 text-white border-b border-slate-800 sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        
+        <!-- Logo & Title -->
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-400 text-dark-950 flex items-center justify-center font-black text-base shadow">
+            M
+          </span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-cairo font-black text-base text-white tracking-wide">
+                Magne<span class="text-amber-400">Steps</span><span class="text-brand-500">™</span>
+              </span>
+              <span class="bg-amber-500/20 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500/30">
+                لوحة الإدارة COD
+              </span>
+            </div>
+            <span class="text-[10px] text-slate-400 block -mt-0.5">إدارة وتأكيد المبيعات بالمغرب</span>
+          </div>
+        </div>
+
+        <!-- Quick Header Actions -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="index.html" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            <span>معاينة صفحة الهبوط</span>
+          </a>
+
+          <button onclick="logout()" class="inline-flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/20 transition">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>خروج</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:py-8 space-y-6">
+
+      <!-- ================= KPI STATS CARDS ================= -->
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+        
+        <!-- Total Orders -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-slate-500 text-xs font-semibold">مجموع الطلبات</span>
+            <span class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-box-open"></i>
+            </span>
+          </div>
+          <div class="mt-2">
+            <h3 class="font-cairo text-2xl sm:text-3xl font-black text-slate-900" id="statTotalOrders">0</h3>
+            <span class="text-[10px] text-slate-400">كل الطلبيات المسجلة</span>
+          </div>
+        </div>
+
+        <!-- Confirmed Orders -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-slate-500 text-xs font-semibold">تم التأكيد (Confirmé)</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-50 text-brand-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-phone-volume"></i>
+            </span>
+          </div>
+          <div class="mt-2">
+            <div class="flex items-baseline gap-2">
+              <h3 class="font-cairo text-2xl sm:text-3xl font-black text-brand-600" id="statConfirmed">0</h3>
+              <span class="text-xs font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded" id="statConfirmationRate">0%</span>
+            </div>
+            <span class="text-[10px] text-slate-400">نسبة تأكيد الطلبيات</span>
+          </div>
+        </div>
+
+        <!-- Delivered & Paid -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-slate-500 text-xs font-semibold">تم التسليم (Livré)</span>
+            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+          </div>
+          <div class="mt-2">
+            <div class="flex items-baseline gap-2">
+              <h3 class="font-cairo text-2xl sm:text-3xl font-black text-emerald-600" id="statDelivered">0</h3>
+              <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" id="statDeliveryRate">0%</span>
+            </div>
+            <span class="text-[10px] text-slate-400">نسبة التوصيل الناجح</span>
+          </div>
+        </div>
+
+        <!-- Total Revenue -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-slate-500 text-xs font-semibold">المداخيل المحصلة</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-wallet"></i>
+            </span>
+          </div>
+          <div class="mt-2">
+            <h3 class="font-cairo text-xl sm:text-2xl font-black text-amber-600" id="statRevenue">0 درهم</h3>
+            <span class="text-[10px] text-slate-400">صافي المبيعات المسلمة</span>
+          </div>
+        </div>
+
+        <!-- Canceled / Fake Orders -->
+        <div class="col-span-2 lg:col-span-1 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span class="text-slate-500 text-xs font-semibold">ملغاة / وهمية (Annulé)</span>
+            <span class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-ban"></i>
+            </span>
+          </div>
+          <div class="mt-2">
+            <h3 class="font-cairo text-2xl sm:text-3xl font-black text-red-500" id="statCanceled">0</h3>
+            <span class="text-[10px] text-slate-400">مرفوضة أو لا تجيب</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= ACTION & CONTROLS TOOLBAR ================= -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2 flex-grow">
+          <!-- Search Input -->
+          <div class="relative flex-grow sm:flex-grow-0 sm:w-64">
+            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 pointer-events-none">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input type="text" id="searchInput" oninput="filterOrders()" placeholder="بحث بالاسم، الهاتف، المدينة..." class="w-full pr-9 pl-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 outline-none">
+          </div>
+
+          <!-- Status Filter Dropdown -->
+          <select id="statusFilter" onchange="filterOrders()" class="py-2 px-3 border border-slate-300 rounded-xl text-xs font-bold text-slate-700 focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+            <option value="all">جميع الحالات (Tous)</option>
+            <option value="en_attente">🟡 قيد الانتظار (En attente)</option>
+            <option value="confirme">🔵 تم التأكيد (Confirmé)</option>
+            <option value="en_livraison">🚚 خرج للتوصيل (En livraison)</option>
+            <option value="livre">🟢 تم التسليم والدفع (Livré)</option>
+            <option value="annule">🔴 ملغاة / وهمية (Annulé)</option>
+          </select>
+        </div>
+
+        <!-- Buttons: Add Manual & Export CSV -->
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button onclick="openAddModal()" class="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow transition">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>إضافة طلبية يدوياً</span>
+          </button>
+
+          <button onclick="exportToCSV()" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3.5 rounded-xl shadow transition" title="تحميل شيت إكسيل لشركة التوصيل">
+            <i class="fa-solid fa-file-excel"></i>
+            <span>تصدير Excel (CSV)</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ================= ORDERS TABLE CONTAINER ================= -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3.5">الرقم / التاريخ</th>
+                <th class="p-3.5">الزبون</th>
+                <th class="p-3.5">الهاتف والإجراء الفوري</th>
+                <th class="p-3.5">العنوان والمدينة</th>
+                <th class="p-3.5">الباك والمبلغ</th>
+                <th class="p-3.5">الحالة (Statut)</th>
+                <th class="p-3.5 text-center">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamically Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyOrdersNotice" class="hidden py-16 text-center text-slate-400">
+          <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-2xl mx-auto mb-3">
+            <i class="fa-solid fa-inbox"></i>
+          </div>
+          <h4 class="font-bold text-slate-700 text-sm mb-1">لا توجد أي طلبيات بعد!</h4>
+          <p class="text-xs text-slate-400 max-w-xs mx-auto">عندما يقوم الزبناء بملء استمارة الطلب في صفحة الهبوط، ستظهر جميع الطلبيات هنا فورياً.</p>
+          <button onclick="addDemoOrders()" class="mt-4 text-xs font-bold text-amber-600 hover:underline">
+            + إضافة طلبيات تجريبية للمعاينة
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+      MagneSteps™ Moroccan COD Dashboard • نظام إدارة المبيعات والتوصيل السريع © 2026
+    </footer>
+
+  </div>
+
+  <!-- ================= ADD ORDER MANUALLY MODAL ================= -->
+  <div id="addModal" class="hidden fixed inset-0 z-50 bg-dark-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-cairo font-black text-lg text-slate-900">إضافة طلبية يدوية جديدة</h3>
+        <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form onsubmit="saveManualOrder(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">اسم الزبون الكامل *</label>
+          <input type="text" id="manualName" required placeholder="مثال: يونس الإدريسي" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">رقم الهاتف المغربي (06/07/05) *</label>
+          <input type="tel" id="manualPhone" required placeholder="مثال: 0612345678" maxlength="10" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none font-mono">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">المدينة والعنوان الكامل *</label>
+          <input type="text" id="manualAddress" required placeholder="مثال: طنجة، مسنانة، قرب مسجد طارق" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">الباك المطلوب</label>
+            <select id="manualPack" onchange="updateManualPrice()" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-white font-bold">
+              <option value="باك 2 أزواج (الأكثر مبيعاً)" data-price="299">باك 2 أزواج (299 د.م)</option>
+              <option value="باك زوج واحد (للتجربة)" data-price="199">باك 1 زوج (199 د.م)</option>
+              <option value="باك العائلة (3 أزواج)" data-price="399">باك 3 أزواج (399 د.م)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">المبلغ الإجمالي (د.م)</label>
+            <input type="number" id="manualPrice" value="299" required class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none font-bold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">الحالة الأولية للطلب</label>
+          <select id="manualStatus" class="w-full py-2.5 px-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-white font-bold">
+            <option value="confirme">🔵 تم التأكيد هاتفياً (Confirmé)</option>
+            <option value="en_attente">🟡 في انتظار الاتصال (En attente)</option>
+          </select>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button type="submit" class="flex-1 bg-amber-500 hover:bg-amber-600 text-dark-950 font-black py-2.5 rounded-xl shadow transition">
+            حفظ الطلبية
+          </button>
+          <button type="button" onclick="closeAddModal()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    const DEFAULT_PIN = "1234";
+    const STORAGE_KEY = "magne_cod_orders";
+    const API_BASE = window.location.protocol.startsWith('http') ? '' : 'http://localhost:5500';
+    let ordersList = [];
+
+    // Check Auth State on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const isAuth = sessionStorage.getItem("magne_admin_auth");
+      if (isAuth === "true") {
+        showAdminApp();
+      }
+    });
+
+    // Handle Login
+    function handleLogin(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById("pinInput").value;
+      const errorMsg = document.getElementById("loginError");
+
+      if (enteredPin === DEFAULT_PIN) {
+        sessionStorage.setItem("magne_admin_auth", "true");
+        errorMsg.classList.add("hidden");
+        showAdminApp();
+      } else {
+        errorMsg.classList.remove("hidden");
+        document.getElementById("pinInput").value = "";
+      }
+    }
+
+    let pollInterval = null;
+    let lastRenderedJson = "";
+
+    const statusConfigs = {
+      en_attente: { label: "في الانتظار", bg: "bg-amber-100 text-amber-800 border-amber-200" },
+      confirme: { label: "تم التأكيد", bg: "bg-blue-100 text-blue-800 border-blue-200" },
+      en_livraison: { label: "خرج للتوصيل", bg: "bg-purple-100 text-purple-800 border-purple-200" },
+      livre: { label: "تم الاستلام والدفع", bg: "bg-emerald-100 text-emerald-800 border-emerald-200" },
+      annule: { label: "ملغي / وهمي", bg: "bg-red-100 text-red-800 border-red-200" }
+    };
+
+    function showAdminApp() {
+      document.getElementById("loginOverlay").classList.add("hidden");
+      document.getElementById("adminApp").classList.remove("hidden");
+      loadOrders(true);
+      if (!pollInterval) {
+        pollInterval = setInterval(() => loadOrders(false), 3000);
+      }
+      window.addEventListener('storage', () => loadOrders(true));
+    }
+
+    function logout() {
+      if (pollInterval) clearInterval(pollInterval);
+      sessionStorage.removeItem("magne_admin_auth");
+      location.reload();
+    }
+
+    // Load Orders from Server API & localStorage
+    async function loadOrders(force = false) {
+      let dataChanged = false;
+      try {
+        const res = await fetch(`${API_BASE}/api/orders`);
+        if (res.ok) {
+          const apiOrders = await res.json();
+          // Merge any orders found in localStorage that weren't synced yet
+          const localStored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          const merged = [...apiOrders];
+          localStored.forEach(lo => {
+            if (!merged.find(m => m.id === lo.id)) {
+              merged.push(lo);
+              fetch(`${API_BASE}/api/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(lo)
+              }).catch(() => {});
+            }
+          });
+          ordersList = merged;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(ordersList));
+        } else {
+          ordersList = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        }
+      } catch (e) {
+        ordersList = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      }
+
+      const currentJson = JSON.stringify(ordersList);
+      if (currentJson !== lastRenderedJson) {
+        dataChanged = true;
+      }
+
+      // Check if user is currently clicking/interacting with a select or input in table
+      const activeEl = document.activeElement;
+      const isInteracting = activeEl && (activeEl.tagName === 'SELECT' || activeEl.tagName === 'INPUT') && document.getElementById('ordersTableBody')?.contains(activeEl);
+
+      // Only rebuild table if data actually changed AND user is not clicking inside a dropdown
+      if ((dataChanged || force) && !isInteracting) {
+        lastRenderedJson = currentJson;
+        const searchVal = document.getElementById("searchInput")?.value.trim();
+        const statusVal = document.getElementById("statusFilter")?.value;
+        if (searchVal || (statusVal && statusVal !== 'all')) {
+          filterOrders();
+        } else {
+          renderOrders(ordersList);
+        }
+      }
+      updateKPIs();
+    }
+
+    // Render Orders in Table
+    function renderOrders(orders) {
+      const tbody = document.getElementById("ordersTableBody");
+      const emptyState = document.getElementById("emptyOrdersNotice");
+      tbody.innerHTML = "";
+
+      if (orders.length === 0) {
+        emptyState.classList.remove("hidden");
+        return;
+      }
+      emptyState.classList.add("hidden");
+
+      orders.forEach((order, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+
+        // Status Badge Style
+        const currentConf = statusConfigs[order.status] || statusConfigs.en_attente;
+
+        // Clean phone for links
+        const cleanPhone = order.phone.replace(/[^0-9]/g, '');
+        const intlPhone = cleanPhone.startsWith('0') ? '212' + cleanPhone.slice(1) : cleanPhone;
+
+        // WhatsApp confirmation message
+        const waText = encodeURIComponent(
+          `السلام عليكم سي ${order.name}، معاك خدمة الزبناء ديال MagneSteps.\n` +
+          `كنتصلو بيك لتأكيد طلبيتك ديال ${order.pack} بمبلغ ${order.price} درهم مع توصيل مجاني إلى ${order.address}.\n` +
+          `واش نبرمجولك التوصيل غداً إن شاء الله؟`
+        );
+
+        tr.innerHTML = `
+          <td class="p-3.5">
+            <span class="font-mono font-bold text-slate-900 block">${order.id || '#CMD-' + (1000 + index)}</span>
+            <span class="text-[10px] text-slate-400 block">${order.date || 'اليوم'} • ${order.time || ''}</span>
+          </td>
+
+          <td class="p-3.5">
+            <span class="font-bold text-slate-900 block">${order.name}</span>
+          </td>
+
+          <td class="p-3.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-slate-800 text-xs">${order.phone}</span>
+              
+              <!-- Direct Call Button -->
+              <a href="tel:${order.phone}" class="w-7 h-7 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 flex items-center justify-center transition" title="اتصال هاتفي مباشر">
+                <i class="fa-solid fa-phone text-xs"></i>
+              </a>
+
+              <!-- Direct WhatsApp Button -->
+              <a href="https://wa.me/${intlPhone}?text=${waText}" target="_blank" class="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition" title="إرسال رسالة تأكيد في الواتساب">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+              </a>
+            </div>
+          </td>
+
+          <td class="p-3.5 max-w-xs">
+            <p class="text-slate-600 truncate" title="${order.address}">${order.address}</p>
+          </td>
+
+          <td class="p-3.5 whitespace-nowrap">
+            <span class="font-bold text-slate-900 block">${order.price} درهم</span>
+            <span class="text-[10px] text-slate-500 block truncate max-w-[120px]">${order.pack}</span>
+          </td>
+
+          <td class="p-3.5">
+            <select onchange="updateOrderStatus('${order.id}', this.value, this)" class="text-xs font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 outline-none transition cursor-pointer ${currentConf.bg}">
+              <option value="en_attente" ${order.status === 'en_attente' ? 'selected' : ''}>🟡 في الانتظار</option>
+              <option value="confirme" ${order.status === 'confirme' ? 'selected' : ''}>🔵 تم التأكيد</option>
+              <option value="en_livraison" ${order.status === 'en_livraison' ? 'selected' : ''}>🚚 خرج للتوصيل</option>
+              <option value="livre" ${order.status === 'livre' ? 'selected' : ''}>🟢 تم الاستلام والدفع</option>
+              <option value="annule" ${order.status === 'annule' ? 'selected' : ''}>🔴 ملغي / وهمي</option>
+            </select>
+          </td>
+
+          <td class="p-3.5 text-center">
+            <button onclick="deleteOrder('${order.id}')" class="text-slate-400 hover:text-red-500 p-1.5 transition" title="حذف الطلب">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Update Status of an Order
+    async function updateOrderStatus(orderId, newStatus, selectEl) {
+      ordersList = ordersList.map(o => {
+        if (o.id === orderId) {
+          return { ...o, status: newStatus };
+        }
+        return o;
+      });
+      lastRenderedJson = JSON.stringify(ordersList);
+      saveOrders();
+
+      if (selectEl) {
+        selectEl.className = `text-xs font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 outline-none transition cursor-pointer ${statusConfigs[newStatus]?.bg || statusConfigs.en_attente.bg}`;
+      }
+
+      updateKPIs();
+
+      try {
+        await fetch(`${API_BASE}/api/orders`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: orderId, status: newStatus })
+        });
+      } catch (err) {
+        console.warn("API update failed:", err);
+      }
+    }
+
+    // Delete an Order
+    async function deleteOrder(orderId) {
+      if (confirm("واش متأكد باغي تمسح هاد الطلبية؟")) {
+        ordersList = ordersList.filter(o => o.id !== orderId);
+        lastRenderedJson = JSON.stringify(ordersList);
+        saveOrders();
+        renderOrders(ordersList);
+        updateKPIs();
+
+        try {
+          await fetch(`${API_BASE}/api/orders?id=${orderId}`, {
+            method: 'DELETE'
+          });
+        } catch (err) {
+          console.warn("API delete failed:", err);
+        }
+      }
+    }
+
+    // Filter & Search
+    function filterOrders() {
+      const q = document.getElementById("searchInput").value.toLowerCase().trim();
+      const st = document.getElementById("statusFilter").value;
+
+      const filtered = ordersList.filter(o => {
+        const matchQuery = !q || 
+          (o.name && o.name.toLowerCase().includes(q)) ||
+          (o.phone && o.phone.includes(q)) ||
+          (o.address && o.address.toLowerCase().includes(q));
+
+        const matchStatus = st === "all" || o.status === st;
+
+        return matchQuery && matchStatus;
+      });
+
+      renderOrders(filtered);
+    }
+
+    // Update Live KPIs
+    function updateKPIs() {
+      const total = ordersList.length;
+      const confirmed = ordersList.filter(o => o.status === 'confirme' || o.status === 'en_livraison' || o.status === 'livre').length;
+      const delivered = ordersList.filter(o => o.status === 'livre').length;
+      const canceled = ordersList.filter(o => o.status === 'annule').length;
+
+      // Revenue from delivered orders
+      const revenue = ordersList
+        .filter(o => o.status === 'livre')
+        .reduce((sum, o) => sum + (parseInt(o.price, 10) || 0), 0);
+
+      document.getElementById("statTotalOrders").textContent = total;
+      document.getElementById("statConfirmed").textContent = confirmed;
+      document.getElementById("statDelivered").textContent = delivered;
+      document.getElementById("statCanceled").textContent = canceled;
+      document.getElementById("statRevenue").textContent = `${revenue.toLocaleString()} درهم`;
+
+      const confRate = total > 0 ? Math.round((confirmed / total) * 100) : 0;
+      const delivRate = confirmed > 0 ? Math.round((delivered / confirmed) * 100) : 0;
+
+      document.getElementById("statConfirmationRate").textContent = `${confRate}%`;
+      document.getElementById("statDeliveryRate").textContent = `${delivRate}%`;
+    }
+
+    // Save orders list back to localStorage
+    function saveOrders() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ordersList));
+    }
+
+    // Export to Excel / CSV
+    function exportToCSV() {
+      if (ordersList.length === 0) {
+        alert("لا توجد طلبيات لتصديرها!");
+        return;
+      }
+
+      let csv = "\uFEFF"; // UTF-8 BOM for Arabic excel support
+      csv += "Reference,Date,Heure,Nom Client,Telephone,Ville et Adresse,Produit,Prix MAD,Statut\n";
+
+      ordersList.forEach(o => {
+        csv += `"${o.id || ''}","${o.date || ''}","${o.time || ''}","${(o.name || '').replace(/"/g, '""')}","${o.phone || ''}","${(o.address || '').replace(/"/g, '""')}","${(o.pack || '').replace(/"/g, '""')}","${o.price || ''}","${o.status || ''}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Commandes_MagneSteps_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Manual Add Order Modal
+    function openAddModal() {
+      document.getElementById("addModal").classList.remove("hidden");
+    }
+    function closeAddModal() {
+      document.getElementById("addModal").classList.add("hidden");
+    }
+    function updateManualPrice() {
+      const sel = document.getElementById("manualPack");
+      const price = sel.options[sel.selectedIndex].getAttribute("data-price");
+      document.getElementById("manualPrice").value = price;
+    }
+
+    async function saveManualOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById("manualName").value.trim();
+      const phone = document.getElementById("manualPhone").value.trim();
+      const address = document.getElementById("manualAddress").value.trim();
+      const pack = document.getElementById("manualPack").value;
+      const price = parseInt(document.getElementById("manualPrice").value, 10);
+      const status = document.getElementById("manualStatus").value;
+
+      const newOrder = {
+        id: "CMD-" + Date.now().toString().slice(-6),
+        name,
+        phone,
+        address,
+        pack,
+        price,
+        status,
+        date: new Date().toLocaleDateString('fr-FR'),
+        time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+        timestamp: new Date().toISOString()
+      };
+
+      ordersList.unshift(newOrder);
+      lastRenderedJson = JSON.stringify(ordersList);
+      saveOrders();
+      closeAddModal();
+      renderOrders(ordersList);
+      updateKPIs();
+
+      try {
+        await fetch(`${API_BASE}/api/orders`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newOrder)
+        });
+      } catch (err) {
+        console.warn("API post manual order failed:", err);
+      }
+    }
+
+    // Helper Demo Orders for Preview
+    function addDemoOrders() {
+      const demoOrders = [
+        {
+          id: "CMD-894102",
+          name: "عمر العلمي",
+          phone: "0661245890",
+          address: "الدار البيضاء، المعاريف، شارع الزرقطوني عمارة 14",
+          pack: "باك 2 أزواج (الأكثر مبيعاً)",
+          price: 299,
+          status: "confirme",
+          date: "اليوم",
+          time: "14:20",
+          timestamp: new Date().toISOString()
+        },
+        {
+          id: "CMD-894101",
+          name: "خديجة الفاسي",
+          phone: "0672109845",
+          address: "الرباط، أكدال، قرب محطة القطار المدينة",
+          pack: "باك العائلة (3 أزواج)",
+          price: 399,
+          status: "livre",
+          date: "اليوم",
+          time: "11:05",
+          timestamp: new Date().toISOString()
+        },
+        {
+          id: "CMD-894100",
+          name: "كريم المنصوري",
+          phone: "0650998877",
+          address: "مراكش، جيليز، إقامة النخيل رقم 8",
+          pack: "باك زوج واحد (للتجربة)",
+          price: 199,
+          status: "en_attente",
+          date: "اليوم",
+          time: "09:40",
+          timestamp: new Date().toISOString()
+        }
+      ];
+      ordersList = demoOrders;
+      lastRenderedJson = JSON.stringify(ordersList);
+      saveOrders();
+      renderOrders(ordersList);
+      updateKPIs();
+      demoOrders.forEach(o => {
+        fetch(`${API_BASE}/api/orders`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(o)
+        }).catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

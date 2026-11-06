@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MagneSteps™ - فرشات القدمين المغناطيسية الطبية | راحة تامة وتخفيف فوري للآلام</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Embedded Assets -->
+  <script src="product-img.js"></script>
+  <script src="trim-img.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+            },
+            dark: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#090d16',
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+    }
+    @keyframes pulse-amber {
+      0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+      50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.85); }
+    }
+    .pulse-btn {
+      animation: pulse-amber 2s infinite;
+    }
+    .shake-anim:hover {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-0">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-dark-950 text-white text-xs md:text-sm font-bold py-2.5 px-4 border-b border-slate-800 shadow-sm">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2 space-x-reverse">
+        <span class="inline-block w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping"></span>
+        <span>🚚 <strong>توصيل مجاني وسريع</strong> لجميع مدن المغرب + <strong>حق فتح الطرد ومعاينته قبل الدفع</strong></span>
+      </div>
+      <div class="hidden sm:flex items-center space-x-3 space-x-reverse font-tajawal text-brand-400">
+        <i class="fa-solid fa-clock text-amber-400"></i>
+        <span>عرض خاص اليوم: <span id="headerTimer" class="font-mono font-black text-amber-400">00:14:32</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="bg-dark-900/95 border-b border-slate-800 sticky top-0 z-40 shadow-md backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-4 py-2 sm:py-2.5 flex items-center justify-between">
+      <a href="#" class="flex items-center group">
+        <img src="images/logo.png" alt="MagneSteps™ - Make every step count" class="h-12 min-[400px]:h-14 sm:h-16 md:h-20 w-auto object-contain mix-blend-screen group-hover:scale-105 transition-transform duration-200">
+      </a>
+      <a href="#order-form" class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-dark-950 text-sm md:text-base font-black py-2.5 px-5 rounded-full shadow-md shadow-amber-500/30 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>اطلب الآن</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="pt-6 pb-12 md:py-16 bg-dark-950 text-white relative overflow-hidden">
+    <!-- Lifestyle MagneSteps Hero Background (Couple Walking in Comfort) -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <img src="images/hero-bg.jpg" alt="MagneSteps Lifestyle" class="w-full h-full object-cover object-center opacity-45 md:opacity-60 scale-105">
+      <div class="absolute inset-0 bg-gradient-to-b from-dark-950/85 via-dark-950/60 to-dark-950/95"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 relative z-10">
+      
+      <!-- Trust Highlights Tag -->
+      <div class="text-center mb-5">
+        <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full text-xs md:text-sm font-bold bg-slate-800/90 text-brand-400 border border-brand-500/30 shadow-lg">
+          <i class="fa-solid fa-certificate text-amber-400"></i>
+          المنتج الأصلي MagneSteps للتدليك بالمغناطيس الطبي والوخز الصيني
+        </span>
+      </div>
+
+      <div class="text-center max-w-4xl mx-auto mb-8">
+        <h2 class="text-[19px] min-[390px]:text-[22px] sm:text-3xl md:text-4xl lg:text-[46px] font-black leading-relaxed md:leading-[1.5]" style="line-height: 1.55;">
+          <span class="block">كتحس بالعيا فالمشي أو آلام</span>
+          <span class="block mt-1 sm:mt-2"><span class="text-amber-400">أسفل الظهر والركبتين</span> من الوقوف الطويل؟</span>
+        </h2>
+        <p class="mt-4 text-base md:text-lg text-slate-300 font-medium leading-relaxed">
+          فرشات <strong class="text-amber-400 font-black">Magne</strong><strong class="text-brand-400 font-black">Steps™</strong> الطبية كتجمع بين تقنية <span class="text-brand-300 font-bold">الوخز بالإبر الصينية (Acupression)</span> ونقاط <span class="text-amber-300 font-bold">المغناطيس الطبي (Magnetic Insoles)</span> لتنشيط الدورة الدموية وتسكين الآلام فكل خطوة!
+        </p>
+      </div>
+
+      <!-- MAIN MEDIA & QUICK PURCHASE BOX -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-slate-800/90 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-3xl shadow-2xl border border-slate-700">
+        
+        <!-- Left Column: Visual Gallery (CR, Confirmation & Delivery Boosters) -->
+        <div class="md:col-span-7 space-y-3.5">
+          <!-- Main Selected Image Container (With Marketing Badges Restored) -->
+          <div class="relative bg-dark-950 rounded-2xl overflow-hidden border border-slate-700 shadow-inner aspect-[4/3] flex items-center justify-center p-2 group">
+            <img id="mainDisplayImg" src="images/comfort-step.jpg" alt="MagneSteps Product" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105">
+            
+            <!-- Marketing Options Badges (Restored) -->
+            <div class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-dark-950 text-xs font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+              <i class="fa-solid fa-fire text-dark-950"></i> تخفيض 40% اليوم
+            </div>
+
+            <div class="absolute top-3 left-3 bg-emerald-600/95 backdrop-blur-sm text-white text-xs font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5 border border-emerald-400/40">
+              <i class="fa-solid fa-box-open"></i> الدفع بعد المعاينة
+            </div>
+          </div>
+
+          <!-- Dynamic Caption (Outside image container to prevent any text overlap) -->
+          <div class="bg-dark-950/90 backdrop-blur-md text-slate-100 text-[11px] sm:text-xs font-bold px-3.5 py-2.5 rounded-xl border border-slate-700 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+            <span id="heroImgOverlayText" class="truncate">🦶 راحة لقدميك مع كل خطوة • نعل أصلي بنقاط تدليك ومغناطيسات</span>
+          </div>
+
+          <!-- Thumbnails Selector (Focused Views: Presentation, Comfort & Pain Relief Reflexology) -->
+          <div class="grid grid-cols-3 gap-2">
+            <!-- 1. Authentic Presentation -->
+            <button onclick="changeImg('intro')" data-type="intro" class="thumb-btn border-2 border-transparent rounded-xl p-2 bg-slate-900/90 flex items-center gap-2 text-right hover:bg-slate-700/80 transition">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-dark-950 rounded-lg overflow-hidden border border-slate-700 flex-shrink-0 flex items-center justify-center">
+                <img src="images/man-presentation.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] sm:text-xs font-bold text-white truncate">تعرّف على MagneSteps</p>
+                <span class="text-[9px] sm:text-[10px] text-amber-400 font-semibold truncate block">العلبة الأصلية</span>
+              </div>
+            </button>
+
+            <!-- 2. Comfort & Acupressure Technology -->
+            <button onclick="changeImg('comfort')" data-type="comfort" class="thumb-btn border-2 border-amber-500 rounded-xl p-2 bg-slate-800 flex items-center gap-2 text-right hover:bg-slate-700/80 transition">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-dark-950 rounded-lg overflow-hidden border border-slate-700 flex-shrink-0 flex items-center justify-center">
+                <img src="images/comfort-step.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] sm:text-xs font-bold text-white truncate">الراحة كل خطوة</p>
+                <span class="text-[9px] sm:text-[10px] text-amber-400 font-semibold truncate block">مغناطيس وتدليك</span>
+              </div>
+            </button>
+
+            <!-- 3. Pain Relief Reflexology -->
+            <button onclick="changeImg('reflexology')" data-type="reflexology" class="thumb-btn border-2 border-transparent rounded-xl p-2 bg-slate-900/90 flex items-center gap-2 text-right hover:bg-slate-700/80 transition">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-dark-950 rounded-lg overflow-hidden border border-slate-700 flex-shrink-0 flex items-center justify-center">
+                <img src="images/reflexology.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] sm:text-xs font-bold text-white truncate">تسكين الآلام</p>
+                <span class="text-[9px] sm:text-[10px] text-brand-400 font-semibold truncate block">الظهر والمفاصل</span>
+              </div>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Quick Offer & Value Props -->
+        <div class="md:col-span-5 flex flex-col justify-between h-full space-y-3.5 text-right">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <div class="flex text-amber-400 text-sm">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <span class="text-xs font-extrabold text-white">4.9 / 5</span>
+              <span class="text-xs text-slate-400">(أكثر من 2,450 طلب تم تسليمه بالمغرب)</span>
+            </div>
+
+            <h3 class="text-xl md:text-2xl font-black text-white">
+              فرشات السيليكون المغناطيسية الأصلية للتدليك وتسكين الآلام
+            </h3>
+            <p class="text-xs text-brand-400 mt-1">تسكين فوري لآلام القدمين والظهر • امتصاص الصدمات أثناء المشي</p>
+          </div>
+
+          <!-- Feature Bullets -->
+          <ul class="space-y-2 text-xs sm:text-sm font-semibold text-slate-200 bg-slate-900/80 p-3.5 rounded-xl border border-slate-700">
+            <li class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-check"></i></span>
+              <span><strong>8 نقاط مغناطيسية طبية</strong> لتخفيف آلام الظهر، الركب، والمفاصل</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-check"></i></span>
+              <span><strong>تنشيط الدورة الدموية</strong> ومنع انتفاخ وثقل القدمين بعد الوقوف</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-check"></i></span>
+              <span><strong>One size fits all</strong>: مقاس موحد تقصه بالمقص من 36 حتى 45</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-check"></i></span>
+              <span><strong>تهوية مضادة للتعرق والرائحة</strong> لجميع أنواع الأحذية</span>
+            </li>
+          </ul>
+
+          <!-- Phone Confirmation Reassurance Box (BOOST CONFIRMATION RATE) -->
+          <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-2xl p-3 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg flex-shrink-0 shadow">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <div class="text-xs">
+              <strong class="text-amber-400 block font-black text-[12px] sm:text-xs">📞 اتصال هاتفي لتأكيد المقاس قبل الإرسال:</strong>
+              <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">سيتصل بكم فريقنا ودوداً لتأكيد قياس حذائكم بدقة، الإجابة على استفساراتكم وبرمجة موعد التسليم المناسب لكم.</span>
+            </div>
+          </div>
+
+          <!-- Pricing Pill -->
+          <div class="bg-gradient-to-r from-slate-900 to-dark-950 p-3.5 rounded-2xl border border-slate-700">
+            <div class="flex items-baseline justify-between">
+              <div>
+                <span class="text-xs font-bold text-slate-400">الثمن بعد التخفيض:</span>
+                <div class="flex items-baseline gap-2 mt-0.5">
+                  <span class="text-3xl font-black text-amber-400 font-cairo">199 <small class="text-base font-bold text-white">درهم</small></span>
+                  <span class="text-sm line-through text-slate-500 font-semibold">299 درهم</span>
+                </div>
+              </div>
+              <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-dark-950 font-black text-xs px-3 py-1 rounded-full shadow">
+                توفير 100 درهم
+              </span>
+            </div>
+            
+            <!-- Delivery Estimation Banner (CR & Delivery Rate Booster) -->
+            <div class="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between text-[11px]">
+              <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-calendar-check"></i> تاريخ التوصيل المتوقع: <span id="deliveryEstimateDate" class="underline font-black"></span>
+              </span>
+              <span class="text-slate-400 font-bold">توصيل مجاني 100%</span>
+            </div>
+          </div>
+
+          <!-- Direct CTA Button -->
+          <a href="#order-form" class="pulse-btn w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 text-dark-950 font-black py-3.5 px-6 rounded-2xl text-center shadow-lg shadow-amber-500/40 flex items-center justify-center gap-3 text-base sm:text-lg transition duration-200">
+            <i class="fa-solid fa-basket-shopping text-xl"></i>
+            <span>اضغط هنا للطلب والدفع بعد المعاينة</span>
+          </a>
+
+          <!-- Delivery Security Guarantee Subtext (DELIVERY RATE BOOSTER) -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 px-1 font-semibold">
+            <span class="flex items-center gap-1 text-emerald-400">
+              <i class="fa-solid fa-circle-check text-[10px]"></i> افتح الكولية وتأكد عاد تخلص
+            </span>
+            <span class="flex items-center gap-1 text-slate-300">
+              <i class="fa-solid fa-rotate-left text-[10px] text-amber-400"></i> ضمان 7 أيام استبدال
+            </span>
+            <span class="flex items-center gap-1 text-brand-400">
+              <i class="fa-solid fa-truck-fast text-[10px]"></i> لباب دارك
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4 TRUST PILLARS BAR (DELIVERY RATE BOOSTER) -->
+  <section class="py-6 bg-slate-900 border-y border-slate-800 text-white">
+    <div class="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center">
+      
+      <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-2">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">حق المعاينة قبل الدفع</h4>
+        <p class="text-xs text-slate-400 mt-0.5">افتح الكولية وتأكد عاد تخلص</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl mb-2">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">توصيل سريع ومجاني</h4>
+        <p class="text-xs text-slate-400 mt-0.5">24 إلى 48 ساعة حتى لباب الدار</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-2">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">الدفع نقدًا عند الاستلام</h4>
+        <p class="text-xs text-slate-400 mt-0.5">Paiement Cash à la livraison</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col items-center">
+        <div class="w-12 h-12 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl mb-2">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">خدمة زبناء هاتفية 7/7</h4>
+        <p class="text-xs text-slate-400 mt-0.5">متابعة دقيقة حتى تستلم طلبك</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SYMPTOMS & PAIN POINTS SECTION (WITH HIGH-CONVERTING VISUALS) -->
+  <section class="py-12 md:py-16 bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="inline-flex items-center gap-1.5 bg-red-500/10 border border-red-500/30 text-red-400 font-extrabold text-xs px-3.5 py-1 rounded-full uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-triangle-exclamation"></i> واش كتعاني من هاد الأعراض يومياً؟
+        </span>
+        <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mt-1">
+          إلى كنت كتحس بواحد من هاد الآلام، المشكل راه فالفرشات ديال صباطك!
+        </h3>
+        <p class="text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+          الوقوف الطويل والمشي بأحذية بدون دعم طبي كيركز كل وزن الجسم فمفاصل وأعصاب معينة، مما يسبب ألم مزمن يعيق نهارك:
+        </p>
+      </div>
+
+      <!-- Symptoms Interactive Visual Card (Conversion Booster) -->
+      <div class="mb-10 overflow-hidden rounded-3xl border border-slate-700/80 shadow-2xl bg-slate-800">
+        <div class="relative">
+          <img src="images/reflexology.jpg" alt="نقاط ألم وتدليك القدمين والمفاصل" class="w-full h-64 md:h-80 object-cover opacity-90 hover:scale-[1.02] transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/60 to-transparent flex flex-col justify-end p-6 md:p-8">
+            <span class="inline-block bg-amber-500 text-dark-950 font-black text-xs px-3 py-1 rounded-full w-max mb-2">
+              ✦ خريطة الوخز الإبري والتدليك الطبي (Reflexology)
+            </span>
+            <h4 class="text-xl md:text-2xl font-black text-white">
+              كل ضغطة على باطن القدم كتحفز أعصاب العمود الفقري والركبة
+            </h4>
+            <p class="text-xs md:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              القدم كتحتوي على أكثر من 7000 نهاية عصبية. ملي كتمشي بدون دعم طبي، الصدمات كترجع كاملة على مفاصلك.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        
+        <!-- Symptom 1 -->
+        <div class="p-5 rounded-2xl bg-slate-800/90 border border-slate-700/80 hover:border-amber-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-xl mb-3.5">
+              <i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-1.5">ألم وحريق أسفل الظهر</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              الحريق لي كيشدك فأسفل العمود الفقري من بعد ما كتوقف بزاف فخدمتك أو كتحرك طيلة اليوم.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center gap-2 text-[11px] text-red-400 font-bold">
+            <i class="fa-solid fa-xmark"></i> صدمات متتالية كتدمر الفقرات
+          </div>
+        </div>
+
+        <!-- Symptom 2 -->
+        <div class="p-5 rounded-2xl bg-slate-800/90 border border-slate-700/80 hover:border-amber-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-3.5">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-1.5">الشوكة العظمية وحريق الكعب</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              صعوبة وضع رجلك على الأرض فالصباح (التهاب اللفافة الأخمصية / Fasciite Plantaire) وحريق لا يطاق فالكعب.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center gap-2 text-[11px] text-amber-400 font-bold">
+            <i class="fa-solid fa-xmark"></i> ضغط قاسي على عظم الكعب
+          </div>
+        </div>
+
+        <!-- Symptom 3 -->
+        <div class="p-5 rounded-2xl bg-slate-800/90 border border-slate-700/80 hover:border-amber-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl mb-3.5">
+              <i class="fa-solid fa-bone"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-1.5">ثقل وتورم الركبتين</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              إحساس بأن الركابي فاشلين ومنتفخين بنهاية النهار، وصعوبة فثني الرجل أو صعود الدروج.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center gap-2 text-[11px] text-brand-400 font-bold">
+            <i class="fa-solid fa-xmark"></i> انعدام امتصاص الصدمات
+          </div>
+        </div>
+
+        <!-- Symptom 4 -->
+        <div class="p-5 rounded-2xl bg-slate-800/90 border border-slate-700/80 hover:border-amber-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-3.5">
+              <i class="fa-solid fa-wind"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-1.5">تنميل وتعرق ورائحة كريهة</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              ركود الدورة الدموية كيخلي الأصابع كينملو، مع احتباس الحرارة لي كيفرز رائحة محرجة داخل الصباط.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center gap-2 text-[11px] text-purple-400 font-bold">
+            <i class="fa-solid fa-xmark"></i> احتباس العرق وتكاثر البكتيريا
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Root Cause Visual Grid (3 Image Cards) -->
+      <div class="mt-12 pt-10 border-t border-slate-800 text-center">
+        <span class="text-amber-400 font-extrabold text-xs uppercase tracking-wider">التشخيص الحقيقي للمشكل</span>
+        <h3 class="text-2xl sm:text-3xl font-black text-white mt-1 mb-2">
+          واش الحذاء ديالك هو السبب فـ هاد المعاناة اليومية؟
+        </h3>
+        <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto mb-8 leading-relaxed">
+          أغلب الصبابط العصرية كتجي بفرشات داخلية مسطحة رخيصة كتدمر استقامة الجسم. شوف كيفاش الدعم الطبي كيغير كلشي:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-right">
+          
+          <!-- Root Cause Card 1 -->
+          <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700 shadow-lg hover:border-amber-500/50 transition flex flex-col">
+            <div class="w-full aspect-square overflow-hidden bg-slate-900">
+              <img src="images/reflexology.jpg" alt="توازن الجسم" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <h4 class="text-base font-bold text-white mb-2">دعم القدمين يعيد توازن كامل الجسم</h4>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                ملي كتكون القدم مدعومة طبياً، العمود الفقري كيتقاد والضغط كيتوزع بالتساوي بلا إجهاد لمفصل الركبة أو الحوض.
+              </p>
+            </div>
+          </div>
+
+          <!-- Root Cause Card 2 -->
+          <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700 shadow-lg hover:border-brand-500/50 transition flex flex-col">
+            <div class="w-full aspect-square overflow-hidden bg-slate-900">
+              <img src="images/man-presentation.jpg" alt="الفرشات الأصلية MagneSteps" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <h4 class="text-base font-bold text-white mb-2">الفرشات الأصلية MagneSteps بالمغناطيس الطبي</h4>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                صحة رجليك كتأثر على نهارك ومزاجك كامل. مع MagneSteps الأصلية غاترجع تمارس نشاطك، خدمتك وخرجاتك بخفة وراحة تامة.
+              </p>
+            </div>
+          </div>
+
+          <!-- Root Cause Card 3 -->
+          <div class="bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700 shadow-lg hover:border-amber-500/50 transition flex flex-col">
+            <div class="w-full aspect-square overflow-hidden bg-slate-900">
+              <img src="images/trim.jpg" alt="قص وتعديل المقاس بسهولة" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <h4 class="text-base font-bold text-white mb-2">سهلة التعديل والقص حسب حذائك</h4>
+              <p class="text-slate-400 text-xs leading-relaxed">
+                بفضل خطوط المقاسات المطبوعة من 36 إلى 45، يمكن قصها بالمقص بدقة في ثوانٍ لتلائم أي حذاء لديك دون انزلاق.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE: BEFORE VS AFTER (CONVERSION RATE BOOSTER) -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-slate-50 via-white to-slate-100 border-b border-slate-200">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <span class="text-brand-600 font-extrabold text-xs uppercase tracking-wider">مقارنة واضحة</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">الفرق بين المشي العادي واستعمال MagneSteps™</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Without MagneSteps -->
+        <div class="bg-red-50/60 p-6 rounded-3xl border border-red-200 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 border-b border-red-200 pb-3">
+            <span class="w-9 h-9 rounded-full bg-red-200 text-red-700 flex items-center justify-center text-lg font-black">✕</span>
+            <h4 class="text-lg font-black text-red-900">بدون فرشات MagneSteps</h4>
+          </div>
+          <ul class="space-y-3 text-xs md:text-sm text-red-950 font-semibold">
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5 flex-shrink-0"></i>
+              <span>صدمات مباشرة وقوية كتضرب فالمفاصل وعظام العمود الفقري</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5 flex-shrink-0"></i>
+              <span>ركود الدورة الدموية فالقدمين مما يسبب انتفاخ وألم حاد كالحجر</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5 flex-shrink-0"></i>
+              <span>عياء شديد وصعوبة الوقوف بعد ساعات قليلة من العمل</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5 flex-shrink-0"></i>
+              <span>تعرق ورائحة كريهة داخل الأحذية بسبب غياب التهوية</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- With MagneSteps -->
+        <div class="bg-brand-50/60 p-6 rounded-3xl border-2 border-brand-500 shadow-md space-y-4 relative">
+          <div class="absolute -top-3 left-6 bg-brand-600 text-white text-[11px] font-black px-3 py-0.5 rounded-full shadow">
+            النتيجة المضمونة
+          </div>
+          <div class="flex items-center gap-3 border-b border-brand-200 pb-3">
+            <span class="w-9 h-9 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-lg font-black">✓</span>
+            <h4 class="text-lg font-black text-brand-950">مع فرشات MagneSteps™ الأصلية</h4>
+          </div>
+          <ul class="space-y-3 text-xs md:text-sm text-brand-950 font-bold">
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+              <span>امتصاص مرن وفوري للصدمات مع حماية تامة للركب وأسفل الظهر</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+              <span>تنشيط تدفق الدم بفضل 8 مغناطيسات طبية تمنع الثقل والتورم</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+              <span>راحة وخفة كأنك كتمشي فوق السحاب طيلة 10 ساعات متواصلة</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+              <span>ثقوب ذكية تسمح بمرور الهواء وتمنع التعرق وتكاثر البكتيريا</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS & 4-LAYER ADVANCED TECHNOLOGY (INSPIRED BY AKUSOLI BLUEPRINT) -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-slate-100 via-white to-slate-50 border-b border-amber-500/15 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <span class="text-brand-600 font-extrabold text-xs md:text-sm uppercase tracking-wider">التكنولوجيا والفعالية الطبية</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">السر وراء الفعالية الفورية لـ MagneSteps™</h3>
+        <p class="text-slate-500 text-xs md:text-sm mt-1">هندسة متطورة تجمع بين الطب الصيني القديم وتكنولوجيا امتصاص الصدمات</p>
+        
+        <!-- Medical Trust Badges Strip -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mt-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-800 border border-amber-500/20 shadow-sm">
+            <i class="fa-solid fa-certificate text-amber-600"></i> معايير بيولوجية معتمدة
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 shadow-sm">
+            <i class="fa-solid fa-shield-halved text-emerald-600"></i> سيليكون طبي 100% مضاد للبكتيريا
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-brand-500/10 text-brand-800 border border-brand-500/20 shadow-sm">
+            <i class="fa-solid fa-wind text-brand-600"></i> مسامات تهوية ضد الروائح والعرق
+          </span>
+        </div>
+      </div>
+
+      <!-- Insole Exploded Tech Blueprint -->
+      <div class="my-8 text-center max-w-xl mx-auto">
+        <div class="bg-white p-4 sm:p-6 rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden group hover:shadow-2xl transition duration-300">
+          <img id="techInsoleImg" src="images/comfort-step.jpg" alt="MagneSteps راحة لقدميك مع كل خطوة • نعل بنقاط تدليك ومغناطيسات" class="w-full max-w-md mx-auto rounded-2xl drop-shadow-sm group-hover:scale-[1.01] transition duration-300">
+          <div class="mt-4 inline-flex items-center gap-2 bg-dark-900 text-amber-400 font-bold text-xs sm:text-sm px-5 py-2 rounded-full shadow border border-amber-500/30">
+            <span>✦ راحة لقدميك مع كل خطوة • نعل أصلي بنقاط تدليك ومغناطيسات</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Pillar 1 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-magnet"></i>
+          </div>
+          <h4 class="text-base font-black text-slate-900 mb-2">العلاج بالمغناطيس الطبي</h4>
+          <p class="text-slate-600 text-xs leading-relaxed">
+            8 مغناطيسات مدمجة بدقة على نقاط الطاقة (Reflexology) كتنشط الدورة الدموية وكتطلق هرمون الإندورفين المسكن للألم.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-brand-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-600 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-shield-virus"></i>
+          </div>
+          <h4 class="text-base font-black text-slate-900 mb-2">طبقة الفضة المضادة للبكتيريا</h4>
+          <p class="text-slate-600 text-xs leading-relaxed">
+            نسيج مشبّع بأيونات الفضة (Antimicrobial Silver) كيقضي على 99% من البكتيريا المسببة للرائحة الكريهة ويحافظ على انتعاش قدميك.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-feather-pointed"></i>
+          </div>
+          <h4 class="text-base font-black text-slate-900 mb-2">دعامة تقوس القدم المرنة</h4>
+          <p class="text-slate-600 text-xs leading-relaxed">
+            دعامة متكيفة كترفع تقوس القدم وتمتص صدمات المشي بنسبة 78% لحماية الكعب والركبة وأسفل الظهر من الارتطام.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-brand-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-600 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-wind"></i>
+          </div>
+          <h4 class="text-base font-black text-slate-900 mb-2">مسامات تهوية Honeycomb</h4>
+          <p class="text-slate-600 text-xs leading-relaxed">
+            فتحات تهوية مصممة على شكل خلايا النحل كتخلي الهواء يدور فالحذاء باستمرار لمنع احتباس العرق وسخونة الأقدام.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ONE PAIR FOR ALL YOUR SHOES (AKUSOLI SIGNATURE BEST-SELLER WITH IMAGES) -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-amber-600 font-extrabold text-xs uppercase tracking-wider">تعدد الاستعمالات 100%</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">فرشات واحدة كتحول أي حذاء عندك لكنز ديال الراحة</h3>
+        <p class="text-slate-500 text-xs md:text-sm mt-1 leading-relaxed">
+          مكتضيقش الصباط وكتنقلها بسهولة من حذاء لآخر، مصممة لتلائم جميع أشكال الأحذية بالمغرب:
+        </p>
+      </div>
+
+      <!-- Real Visual Showcase Banner: Shoes Compatibility -->
+      <div class="mb-10 rounded-3xl overflow-hidden border border-slate-700/60 shadow-2xl bg-dark-950 flex items-center justify-center max-w-2xl mx-auto">
+        <img src="images/shoes-compatibility.jpg" alt="نعل واحد لأحذيتك اليومية - قابل للقص حسب مقاسك MagneSteps" class="w-full h-auto object-contain">
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Shoe 1: Safety Shoes (Huge pain point in Morocco) -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm text-center hover:border-amber-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="h-28 rounded-xl bg-amber-500/10 border border-amber-500/20 flex flex-col items-center justify-center text-amber-600 mb-3">
+              <i class="fa-solid fa-helmet-safety text-4xl mb-1"></i>
+              <span class="text-[11px] font-bold">Sécurité & Chantier</span>
+            </div>
+            <h4 class="font-black text-slate-900 text-sm mb-1">أحذية السلامة (Sécurité)</h4>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              الحل السحري للمهندسين، التقنيين والعمال لي كيهلكهم ثقل وقساوة صباط السيكوريتي طيلة النهار.
+            </p>
+          </div>
+          <span class="inline-block mt-3 text-[10px] font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full mx-auto">
+            أعلى طلب من المهنيين
+          </span>
+        </div>
+
+        <!-- Shoe 2: Sneakers / Sports -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm text-center hover:border-brand-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="h-28 rounded-xl bg-brand-500/10 border border-brand-500/20 flex flex-col items-center justify-center text-brand-600 mb-3">
+              <i class="fa-solid fa-person-running text-4xl mb-1"></i>
+              <span class="text-[11px] font-bold">Sport & Marche</span>
+            </div>
+            <h4 class="font-black text-slate-900 text-sm mb-1">سبرديلات الرياضة والمشي</h4>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              مثالية للمشي الطويل، السفر، الرياضة وقضاء الأغراض اليومية بدون الإحساس بأي عياء فالساقين.
+            </p>
+          </div>
+          <span class="inline-block mt-3 text-[10px] font-bold text-brand-700 bg-brand-100 px-2.5 py-0.5 rounded-full mx-auto">
+            خفة ونشاط مستمر
+          </span>
+        </div>
+
+        <!-- Shoe 3: Classic / Office Shoes -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm text-center hover:border-brand-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="h-28 rounded-xl bg-slate-900/10 border border-slate-800/20 flex flex-col items-center justify-center text-slate-800 mb-3">
+              <i class="fa-solid fa-user-tie text-4xl mb-1"></i>
+              <span class="text-[11px] font-bold">Classique & Bureau</span>
+            </div>
+            <h4 class="font-black text-slate-900 text-sm mb-1">أحذية العمل الكلاسيكية</h4>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              كتصلح داخل صبابط الكلاسيك والجلد القاصح للموظفين، الأساتذة، والأطباء لي كيقيلو واقفين.
+            </p>
+          </div>
+          <span class="inline-block mt-3 text-[10px] font-bold text-slate-700 bg-slate-200 px-2.5 py-0.5 rounded-full mx-auto">
+            راحة غير مرئية
+          </span>
+        </div>
+
+        <!-- Shoe 4: Everyday Shoes -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm text-center hover:border-emerald-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="h-28 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col items-center justify-center text-emerald-600 mb-3">
+              <i class="fa-solid fa-shoe-prints text-4xl mb-1"></i>
+              <span class="text-[11px] font-bold">Tous Les Jours</span>
+            </div>
+            <h4 class="font-black text-slate-900 text-sm mb-1">الأحذية اليومية والبوتات</h4>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              كتناسب أحذية الرجال والنساء، الشتوية والصيفية، وبفضل نحافتها مكتزاحمش مع رجلك.
+            </p>
+          </div>
+          <span class="inline-block mt-3 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full mx-auto">
+            مناسبة للجنسين
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP-BY-STEP USE INSTRUCTIONS WITH VISUALS -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-white via-slate-50 to-white border-b border-slate-200/80">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <span class="text-brand-600 font-extrabold text-xs uppercase tracking-wider">سهلة وسريعة</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">طريقة الاستعمال فـ 3 خطوات سريعة</h3>
+        <p class="text-slate-500 text-xs md:text-sm mt-1">جاهزة للاستعمال فـ أقل من دقيقة واحدة لأي حذاء عندك</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-center mb-3">
+              <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-900 font-black text-xs">
+                <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xs shadow-sm">1</span>
+                <span>الخطوة الأولى</span>
+              </span>
+            </div>
+            <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 flex items-center justify-center">
+              <img id="productStepThumb" src="images/step1-measure.jpg" alt="حدد المقاس المطلوب من 36 حتى 45" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">حدد المقاس المطلوب</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">حط الفرشاة القديمة ديال صباطك فوق MagneSteps أو شوف رقم رجلك فالخطوط من 36 لـ 45</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-center mb-3">
+              <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-900 font-black text-xs">
+                <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xs shadow-sm">2</span>
+                <span>الخطوة الثانية</span>
+              </span>
+            </div>
+            <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 flex items-center justify-center">
+              <img id="trimStepThumb" src="images/trim.jpg" alt="قص المقاس بالمقص" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">قص بالمقص العادي</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">تبع الخط الدائري المحفور بالمقص باش تقادها مع شكل الحذاء فـ 10 ثواني بكل سلاسة</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-center mb-3">
+              <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-900 font-black text-xs">
+                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black text-xs shadow-sm">3</span>
+                <span>الخطوة الثالثة</span>
+              </span>
+            </div>
+            <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 border border-slate-100 bg-slate-50 flex items-center justify-center">
+              <img src="images/comfort-step.jpg" alt="راحة فورية عند المشي" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">استمتع بالراحة الفورية</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">لبس صباطك وتمشى بخفة ونشاط وانتعاش من الصباح حتى للمساء بلا ألم ولا عياء</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MID-PAGE URGENCY BANNER (INSPIRED BY AKUSOLI STICKY CALLOUT) -->
+  <section class="py-8 bg-gradient-to-r from-dark-950 via-slate-900 to-dark-950 text-white border-y border-amber-500/30">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
+      <div>
+        <span class="text-amber-400 font-black text-xs uppercase tracking-wider block mb-1">
+          ⏳ عرض استثنائي لليوم فقط
+        </span>
+        <h4 class="text-xl md:text-2xl font-black text-white">
+          استفد من تخفيض حتى لـ 60% + التوصيل بالمجان حتى لباب الدار
+        </h4>
+        <p class="text-slate-400 text-xs mt-0.5">الدفع نقدًا عند الاستلام بعد معاينة المنتج والتأكد من الجودة</p>
+      </div>
+      <a href="#order-form" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-95 text-dark-950 font-black py-3.5 px-8 rounded-xl text-sm shadow-xl flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-cart-arrow-down"></i>
+        <span>اطلب الآن قبل نفاد المخزون</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SPECIAL PACKS & OPTIMIZED COD ORDER FORM (MAX CONVERSION & CONFIRMATION RATE) -->
+  <section id="order-form" class="relative py-14 md:py-20 bg-slate-100 scroll-mt-12 overflow-hidden border-t border-slate-200">
+    <!-- Authentic MagneSteps Studio Background (Box on left, insoles on right) -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <img src="images/checkout-bg.png" alt="MagneSteps Checkout Background" class="w-full h-full object-cover object-center opacity-70 md:opacity-85">
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-transparent to-slate-100/80"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4">
+      
+      <!-- Section Title & Timer -->
+      <div class="text-center mb-10">
+        <span class="inline-block bg-gradient-to-r from-amber-500 to-amber-600 text-dark-950 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-2 shadow-md">
+          ⚡ عرض خاص بالمغرب: ينتهي قريباً والمخزون محدود
+        </span>
+        <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 drop-shadow-sm">
+          استمارة الطلب السريع والدفع عند الاستلام
+        </h3>
+        <p class="text-slate-600 text-xs md:text-sm mt-1.5 font-medium">عمر معلوماتك دابا، والتوصيل كيوصلك حتى للدار فـ 24 إلى 48 ساعة</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        
+        <!-- Packs Selection -->
+        <div class="md:col-span-5 space-y-4">
+          <label class="block text-sm font-black text-slate-900 mb-2 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-dark-900 text-amber-400 flex items-center justify-center text-xs font-black shadow-sm">1</span>
+            <span>اختر العرض المناسب لك:</span>
+          </label>
+
+          <!-- Pack 2 (Best Seller - Amber / Gold highlighted) -->
+          <div onclick="selectPack(2, 299)" id="packCard-2" class="cursor-pointer relative p-4 rounded-2xl border-2 border-amber-500 bg-amber-50/70 shadow-md transition duration-200">
+            <div class="absolute -top-3 left-4 bg-gradient-to-r from-amber-500 to-amber-600 text-dark-950 text-[10px] font-black px-3 py-0.5 rounded-full shadow">
+              🔥 الأكثر طلباً (الأفضل قيمة)
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="pack_selection" id="radio-2" checked class="w-5 h-5 text-amber-600 focus:ring-amber-500">
+                <div>
+                  <h4 class="font-black text-slate-900 text-base">باك 2 أزواج (زوجين)</h4>
+                  <p class="text-xs text-slate-600">لك ولشخص عزيز أو للتبديل بين الأحذية</p>
+                </div>
+              </div>
+              <div class="text-left font-cairo">
+                <span class="text-xl font-black text-amber-700">299 <small class="text-xs">درهم</small></span>
+                <span class="block text-[11px] line-through text-slate-400">499 درهم</span>
+              </div>
+            </div>
+            <div class="mt-2 text-[11px] font-bold text-amber-800 flex items-center justify-between border-t border-amber-200 pt-2">
+              <span>وفر 200 درهم كاملة</span>
+              <span class="text-brand-700">🚚 شحن مجاني</span>
+            </div>
+          </div>
+
+          <!-- Pack 1 (Standard) -->
+          <div onclick="selectPack(1, 199)" id="packCard-1" class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-slate-300 transition duration-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="pack_selection" id="radio-1" class="w-5 h-5 text-brand-600 focus:ring-brand-500">
+                <div>
+                  <h4 class="font-black text-slate-900 text-base">باك زوج واحد (1 زوج)</h4>
+                  <p class="text-xs text-slate-500">باك التجربة لشخص واحد</p>
+                </div>
+              </div>
+              <div class="text-left font-cairo">
+                <span class="text-xl font-black text-slate-900">199 <small class="text-xs">درهم</small></span>
+                <span class="block text-[11px] line-through text-slate-400">299 درهم</span>
+              </div>
+            </div>
+            <div class="mt-2 text-[11px] font-bold text-slate-600 flex items-center justify-between border-t border-slate-100 pt-2">
+              <span>وفر 100 درهم</span>
+              <span class="text-brand-600">🚚 شحن مجاني</span>
+            </div>
+          </div>
+
+          <!-- Pack 3 (Family Pack) -->
+          <div onclick="selectPack(3, 399)" id="packCard-3" class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-slate-300 transition duration-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="pack_selection" id="radio-3" class="w-5 h-5 text-brand-600 focus:ring-brand-500">
+                <div>
+                  <h4 class="font-black text-slate-900 text-base">باك العائلة (3 أزواج)</h4>
+                  <p class="text-xs text-slate-500">3 أزواج كاملة لجميع أفراد الأسرة</p>
+                </div>
+              </div>
+              <div class="text-left font-cairo">
+                <span class="text-xl font-black text-slate-900">399 <small class="text-xs">درهم</small></span>
+                <span class="block text-[11px] line-through text-slate-400">699 درهم</span>
+              </div>
+            </div>
+            <div class="mt-2 text-[11px] font-bold text-amber-700 flex items-center justify-between border-t border-slate-100 pt-2">
+              <span>وفر 300 درهم كاملة!</span>
+              <span class="text-brand-600">🚚 شحن مجاني</span>
+            </div>
+          </div>
+
+          <!-- Anti-Scam / Reassurance Note -->
+          <div class="bg-white/95 backdrop-blur-md border border-emerald-500/30 text-slate-800 text-xs p-4 rounded-2xl flex items-start gap-3 shadow-md">
+            <i class="fa-solid fa-shield-halved text-xl text-emerald-600 flex-shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="block font-bold text-sm text-slate-900">ضمان المعاينة قبل الدفع:</strong>
+              <span class="text-[11px] text-slate-600 leading-relaxed block mt-0.5">
+                عند وصول موزع التوصيل، يحق لك فتح الطرد والتأكد من جودة المنتج ومطابقته قبل دفع أي درهم.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- COD Order Form Container -->
+        <div class="md:col-span-7 bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-200">
+          <div class="border-b border-slate-150 pb-4 mb-5">
+            <h4 class="text-lg font-black text-slate-900 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-dark-900 text-amber-400 flex items-center justify-center text-xs font-black">2</span>
+              <span>أدخل معلومات التوصيل بدقة:</span>
+            </h4>
+            <p class="text-xs text-slate-500 mt-1">سنتصل بك هاتفياً لتأكيد إرسال الطلبية</p>
+          </div>
+
+          <form id="codOrderForm" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+            
+            <!-- Anti-Bot Honeypot Field (Invisible to humans) -->
+            <input type="text" name="b_extra_hp" id="formHoneypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
+
+            <!-- Full Name -->
+            <div>
+              <label for="fullName" class="block text-xs font-bold text-slate-700 mb-1">الاسم والنسب الكامل *</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 pointer-events-none">
+                  <i class="fa-solid fa-user"></i>
+                </span>
+                <input type="text" id="fullName" required placeholder="مثال: محمد العلوي" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-slate-50/50">
+              </div>
+            </div>
+
+            <!-- Phone Number with Live Moroccan Format Validation (Confirmation Rate Booster) -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label for="phoneNumber" class="block text-xs font-bold text-slate-700">رقم الهاتف الشغال (06 / 07 / 05) *</label>
+                <span id="phoneStatusText" class="text-[10px] font-bold text-slate-400">10 أرقام</span>
+              </div>
+              <div class="relative">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 pointer-events-none">
+                  <i class="fa-solid fa-phone"></i>
+                </span>
+                <input type="tel" id="phoneNumber" required oninput="validateMoroccanPhone(this)" placeholder="مثال: 0612345678" maxlength="10" class="w-full pr-10 pl-10 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-slate-50/50 text-left font-mono" dir="ltr">
+                <span id="phoneCheckIcon" class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-300 pointer-events-none">
+                  <i class="fa-solid fa-circle-check"></i>
+                </span>
+              </div>
+              <span class="text-[10px] text-amber-800 font-semibold mt-1 block">
+                ⚠️ يرجى التأكد من الرقم، سيتصل بك فريقنا لتأكيد موعد التوصيل قبل إرسال الطرد
+              </span>
+            </div>
+
+            <!-- City & Address Combined -->
+            <div>
+              <label for="address" class="block text-xs font-bold text-slate-700 mb-1">المدينة والعنوان الكامل *</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 pointer-events-none">
+                  <i class="fa-solid fa-map-location-dot"></i>
+                </span>
+                <input type="text" id="address" required placeholder="مثال: الدار البيضاء، حي السلام، زنقة 14، رقم 22" class="w-full pr-10 pl-3 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-slate-50/50">
+              </div>
+            </div>
+            <!-- Order Summary Box -->
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 mt-4">
+              <div class="flex justify-between text-xs text-slate-600 mb-1.5">
+                <span>المنتج:</span>
+                <span class="font-bold text-slate-800" id="summaryPackTitle">باك 2 أزواج (الأكثر مبيعاً)</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600 mb-1.5">
+                <span>مصاريف الشحن والتوصيل:</span>
+                <span class="font-bold text-brand-600">مجاني 100% بالمجان</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600 mb-2">
+                <span>طريقة الدفع:</span>
+                <span class="font-bold text-slate-800">الدفع نقداً بعد المعاينة (COD)</span>
+              </div>
+              <div class="border-t border-slate-200 pt-2 flex justify-between items-baseline">
+                <span class="font-black text-slate-900 text-sm">المجموع الصافي:</span>
+                <span class="font-cairo text-2xl font-black text-amber-600" id="summaryTotal">299 درهم</span>
+              </div>
+            </div>
+
+            <!-- Serious Buyer Commitment Notice (Diminuer les retours) -->
+            <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm flex-shrink-0"></i>
+              <span>المرجو التأكد من الطلب فقط في حالة الجدية التامة لتجنب إلحاق الضرر بمصاريف الشحن.</span>
+            </div>
+
+            <!-- Submit Button (Amber / Gold pulse) -->
+            <button type="submit" id="submitBtn" class="pulse-btn w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 active:scale-[0.98] text-dark-950 font-black py-4 px-6 rounded-2xl text-lg shadow-xl shadow-amber-500/40 flex items-center justify-center gap-3 transition">
+              <i class="fa-solid fa-circle-check text-xl"></i>
+              <span>تأكيد الطلب الآن</span>
+            </button>
+
+            <p class="text-center text-[11px] text-slate-400 mt-2">
+              🔒 معلوماتك في أمان تام ولن يتم مشاركتها أبداً
+            </p>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REAL MOROCCAN CUSTOMER REVIEWS -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-t border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <span class="text-brand-600 font-extrabold text-xs uppercase tracking-wider">شهادات حقيقية وموثقة</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">آراء زبنائنا في مختلف المدن المغربية</h3>
+        <p class="text-slate-500 text-xs md:text-sm mt-1">هادشي لي قالو الناس بعدما جربو MagneSteps™</p>
+        
+        <!-- Aggregate Rating Badge -->
+        <div class="inline-flex items-center gap-2 mt-3 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 shadow-sm">
+          <div class="flex text-amber-400 text-xs">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <span class="text-xs font-black text-slate-800">4.9 / 5</span>
+          <span class="text-[11px] text-slate-500 font-semibold">(أكثر من 2,450 طلب تم تسليمه بالمغرب)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Review 1 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "أنا أستاذ وكنوقف قرابة 6 ساعات فاليوم، كان كيقتلني أسفل الظهر والركابي. جربت هاد الفرشات صراحة من النهار الثالث حسيت بفرق شاسع ورجلي ولاو خفاف. شكراً على سرعة التوصيل فالدار البيضاء."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-800 font-black flex items-center justify-center text-sm">ع</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">عمر بنجلون</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> الدار البيضاء (مشتري موثق)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "وصلاتني الكولية للرباط فـ 24 ساعة، قلبتها عاد عطيت الفلوس للفرور. قطعتها بالمقص على مقاس صباطي 38 وجات ساهلة ومريحة بزاف ومكتعرقش الرجل نهائياً."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-black flex items-center justify-center text-sm">ف</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">فاطمة الزهراء ح.</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> الرباط (مشتري موثق)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "خديت الباك ديال زوجين 299 درهم، وحدة درتها فصباط الخدمة ووحدة فالسبرديلة ديال لاروندوني. إحساس بالراحة فكل خطوة وكتنقص من الصدمات ديال الحجر."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-dark-900 text-amber-400 font-black flex items-center justify-center text-sm">ر</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">رشيد التازي</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> طنجة (مشتري موثق)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "كنخدم مهندس موقع فـ البناء، وكنلبس صباط السيكوريتي 10 ساعات فاليوم. كان ديما كيهلكني فـ كعبي وأسفل ظهري. درت هاد الفرشات لداخل، والله حتى تبدل الإحساس تماماً ولا الصباط خفيف وكنرجع للدار بلا دوك الحريق. الله يرحم الوالدين."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-black flex items-center justify-center text-sm">ي</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">ياسين المرابط</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> مراكش (مشتري موثق)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "عندي الشوكة العظمية (Épine calcanéenne) فـ الكعب وكنت كنلقى صعوبة غير باش نحط رجلي فالأرض فالصباح. من نهار بديت كنستعمل MagneSteps نقص الحريق بأكثر من 80%، ودابا وليت كنتمشى مرتاحة. طلبت دابا باك آخر للوالدة ديالي."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-800 font-black flex items-center justify-center text-sm">س</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">سعاد العلمي</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> فاس (مشترية موثقة)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-700 text-xs md:text-sm leading-relaxed mb-4">
+              "أنا سائق وكنبقى جالس ورجلي على لومبرياج النهار كامل، وكان كيجيني التنميل فـ صباع رجلي وثقل فـ الدورة الدموية. هاد المغناطيسات عطاو مفعول حقيقي، كنحس بالنشاط والدم كيتحرك فرجلي. التوصيل كان سريع والتعامل فالمستوى."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-800 font-black flex items-center justify-center text-sm">ح</div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">حمزة أيت بلعيد</h5>
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-brand-500"></i> أكادير (مشتري موثق)
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FREQUENTLY ASKED QUESTIONS (FAQ) -->
+  <section class="py-14 md:py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100 border-t border-slate-200/80">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <span class="text-brand-600 font-extrabold text-xs uppercase tracking-wider">إجابات واضحة</span>
+        <h3 class="text-2xl md:text-3xl font-black text-slate-900 mt-1">الأسئلة الشائعة</h3>
+        <p class="text-xs text-slate-500 mt-1 font-medium">كل ما يخص الطلب، الضمان، والاستعمال اليومي</p>
+      </div>
+
+      <div class="space-y-3.5">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(1)">
+            <span>واش غاتجي قد قياس رجلي؟</span>
+            <i id="faq-icon-1" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-1" class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            نعم 100%! الفرشات مصممة بنظام "One Size Fits All" وفيها خطوط محفورة واضحة لجميع المقاسات من 36 حتى 45. كتاخد مقص عادي وكتقطع على الخط لي كيناسب حذاءك.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(2)">
+            <span>شحال كياخد التوصيل؟</span>
+            <i id="faq-icon-2" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-2" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            التوصيل كياخد ما بين 24 إلى 48 ساعة فقط كيوصلك الليفرور حتى لباب الدار أو مقر العمل ديالك فجميع مدن المغرب.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(3)">
+            <span>واش كنخلص قبل ولا حتى كيوصلني المنتوج؟</span>
+            <i id="faq-icon-3" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-3" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            الدفع نقدًا عند الاستلام (Paiement à la livraison). ما كتخلص حتى كيوصلك الموزع الطرد ديالك وتقلبو وتتأكد من الجودة ديالو عاد تخلص.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(4)">
+            <span>واش نقدر نبدل إلا كان شي مشكل؟</span>
+            <i id="faq-icon-4" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-4" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            نعم بطبيعة الحال، عندك ضمان استبدال مجاني في حالة وجود أي عيب أو مشكل بالمنتج. خدمة الزبناء ديالنا رهن إشارتكم 7/7.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(5)">
+            <span>واش كتصلح للناس لي كيعانيو من الشوكة العظمية (التهاب اللفافة الأخمصية)؟</span>
+            <i id="faq-icon-5" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-5" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            نعم تماماً! الدعامة الطبية المدمجة لتقوس القدم مع المغناطيسات الحيوية كتمتص الضغط القاسي على الكعب بنسبة تزيد عن 75%، مما يريح الأنسجة الملتهبة وكيخلي أول خطوة فالصباح سهلة وبلا حريق.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(6)">
+            <span>واش كتسخن الرجل وكتدير العرق أو الرائحة فالصباط؟</span>
+            <i id="faq-icon-6" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-6" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            لا نهائياً! الفرشات مجهزة بنسيج مشبع بأيونات الفضة المضادة للبكتيريا، مع أكثر من 250 مسام تهوية هوائي كتحافظ على جفاف وبرودة القدمين وتمنع تكون البكتيريا المسببة للروائح طيلة اليوم.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-200">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center justify-between cursor-pointer" onclick="toggleFaq(7)">
+            <span>واش غاتجي مقادة فصباط السلامة المهنية (Chaussure de sécurité)؟</span>
+            <i id="faq-icon-7" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
+          </h4>
+          <p id="faq-ans-7" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
+            نعم! هادا من أكثر الاستعمالات لي كيطلبوها زبنائنا فالمغرب. كتعوض الفرشاة القاصحة ديال صباط السيكوريتي وكتخفف عليك ثقل الحديد وقساوة الأرضية أثناء ساعات العمل الطويلة.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark-950 text-slate-400 text-xs py-8 border-t border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 text-center space-y-3">
+      <div class="flex items-center justify-center">
+        <img src="images/logo.png" alt="MagneSteps™ Maroc" class="h-16 sm:h-20 md:h-24 w-auto object-contain mix-blend-screen opacity-95 hover:opacity-100 transition">
+      </div>
+      <p class="max-w-md mx-auto text-slate-500 text-[11px]">
+        متجر التجارة الإلكترونية المحلي الأول بالمغرب لمنتجات الصحة والراحة اليومية. جميع الحقوق محفوظة © 2026
+      </p>
+      <div class="flex items-center justify-center gap-4 text-slate-500 text-[11px] pt-2">
+        <a href="privacy-policy.html" class="hover:text-amber-400 transition underline underline-offset-4">سياسة الخصوصية</a>
+        <span>•</span>
+        <a href="terms.html" class="hover:text-amber-400 transition underline underline-offset-4">الشروط والأحكام</a>
+        <span>•</span>
+        <a href="returns.html" class="hover:text-amber-400 transition underline underline-offset-4">سياسة الاسترجاع والاستبدال</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY BOTTOM BUY BAR (CONVERSION RATE BOOSTER #1 ON MOBILE) -->
+  <div class="fixed bottom-0 inset-x-0 z-40 bg-dark-900/95 backdrop-blur-md border-t border-slate-800 p-3 shadow-2xl flex md:hidden items-center justify-between gap-3">
+    <div>
+      <span class="text-[10px] text-slate-400 block leading-tight">الثمن بعد التخفيض:</span>
+      <span class="text-lg font-black text-amber-400 font-cairo" id="stickyPriceText">299 درهم</span>
+    </div>
+    <a href="#order-form" class="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 active:scale-95 text-dark-950 font-black py-3 px-4 rounded-xl text-center text-sm shadow-lg flex items-center justify-center gap-2">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>اطلب الآن - الدفع عند الاستلام</span>
+    </a>
+  </div>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/212600000000?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A8%D8%BA%D9%8A%D8%AA%20%D9%86%D8%B3%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%81%D8%B1%D8%B4%D8%A7%D8%AA%20MagneSteps" target="_blank" rel="noopener noreferrer" class="fixed bottom-20 md:bottom-5 left-5 z-50 bg-[#25D366] hover:bg-[#20ba59] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl shadow-green-500/40 transition-transform duration-200 hover:scale-110" title="تواصل عبر الواتساب">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- RECENT ORDER POPUP -->
+  <div id="salesPopup" class="fixed bottom-20 md:bottom-5 right-5 z-40 bg-dark-900/95 backdrop-blur-md border border-slate-700 text-white p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 max-w-xs transition-all duration-500 transform translate-y-24 opacity-0 pointer-events-none">
+    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg flex-shrink-0">
+      <i class="fa-solid fa-bag-shopping"></i>
+    </div>
+    <div class="text-[11px]">
+      <p class="font-bold text-white"><span id="popupName">محمد من الدار البيضاء</span></p>
+      <p class="text-slate-400">طلب للتو <strong class="text-amber-400">باك 2 أزواج</strong></p>
+      <span class="text-[10px] text-brand-400" id="popupTime">منذ 3 دقائق</span>
+    </div>
+  </div>
+
+  <!-- HIGH-CONVERTING CONFIRMATION MODAL WITH WHATSAPP 1-CLICK INSTANT CONFIRMATION (CONFIRMATION & DELIVERY BOOSTER) -->
+  <div id="thankYouModal" class="fixed inset-0 z-50 bg-dark-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl transform transition-all">
+      <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-2xl font-black text-slate-900">شكراً لك على ثقتك!</h3>
+      <p class="text-brand-600 font-bold text-sm mt-1">تم تسجيل طلبك بنجاح بنظام الدفع عند الاستلام</p>
+      
+      <!-- Order details box -->
+      <div class="bg-slate-50 rounded-2xl p-4 my-4 text-right text-xs space-y-2 border border-slate-200">
+        <p><strong class="text-slate-700">الاسم:</strong> <span id="modalName" class="text-slate-900 font-bold"></span></p>
+        <p><strong class="text-slate-700">الهاتف:</strong> <span id="modalPhone" class="text-slate-900 font-mono font-bold" dir="ltr"></span></p>
+        <p><strong class="text-slate-700">المدينة والعنوان:</strong> <span id="modalAddress" class="text-slate-900 font-bold"></span></p>
+        <p><strong class="text-slate-700">العرض:</strong> <span id="modalPack" class="text-amber-600 font-bold"></span></p>
+        <p><strong class="text-slate-700">المبلغ الصافي:</strong> <span id="modalTotal" class="text-slate-900 font-bold"></span></p>
+      </div>
+
+      <!-- High-converting 1-click WhatsApp Instant Confirmation button -->
+      <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 mb-4 text-right">
+        <p class="text-xs font-bold text-emerald-900 mb-2 flex items-center gap-1.5">
+          <i class="fa-brands fa-whatsapp text-emerald-600 text-base"></i>
+          <span>بغيتي طلبيتك تشحن وتوصلك فأسرع وقت؟</span>
+        </p>
+        <a id="whatsappConfirmBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-[#25D366] hover:bg-[#20ba59] text-white font-black py-3 px-4 rounded-xl text-center text-sm shadow-md flex items-center justify-center gap-2 transition">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+          <span>تأكيد الطلبية فوراً عبر الواتساب ⚡</span>
+        </a>
+      </div>
+
+      <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+        📞 في حال لم تؤكد عبر الواتساب، سيتصل بك فريق خدمة الزبناء هاتفياً خلال ساعات لتأكيد العنوان قبل إرسال الطرد مع شركة التوصيل.
+      </p>
+
+      <button onclick="closeModal()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-3 px-6 rounded-xl transition text-sm">
+        إغلاق النافذة
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Load embedded images & dynamic delivery date
+    document.addEventListener("DOMContentLoaded", () => {
+      const mainImg = document.getElementById("mainDisplayImg");
+      const thumb1 = document.getElementById("thumb1");
+      const thumb2 = document.getElementById("thumb2");
+
+      // Universal Image Fallback Safeguard
+      document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+          if (!this.src.includes('images/product.jpg')) {
+            this.src = 'images/product.jpg';
+          }
+        });
+      });
+
+      startHeaderTimer(14 * 60 + 32);
+      startFakeSalesPopups();
+      setupDeliveryDate();
+    });
+
+    // Dynamic Delivery Date (CR & Delivery rate booster)
+    function setupDeliveryDate() {
+      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو', 'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نوفمبر', 'دجنبر'];
+      
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      const dayName = days[tomorrow.getDay()];
+      const dayNumber = tomorrow.getDate();
+      const monthName = months[tomorrow.getMonth()];
+      
+      const formatted = `غداً ${dayName} ${dayNumber} ${monthName}`;
+      const elem = document.getElementById("deliveryEstimateDate");
+      if (elem) elem.textContent = formatted;
+    }
+
+    // Live Phone Validation (Confirmation rate booster)
+    function validateMoroccanPhone(input) {
+      const val = input.value.replace(/[^0-9]/g, '');
+      input.value = val;
+      const statusText = document.getElementById("phoneStatusText");
+      const checkIcon = document.getElementById("phoneCheckIcon");
+
+      const isValid = /^(06|07|05)[0-9]{8}$/.test(val);
+
+      if (isValid) {
+        input.classList.remove("border-slate-300", "border-red-400");
+        input.classList.add("border-emerald-500", "bg-emerald-50/30");
+        statusText.textContent = "✓ رقم مغربي صحيح";
+        statusText.className = "text-[10px] font-bold text-emerald-600";
+        checkIcon.className = "absolute inset-y-0 left-0 flex items-center pl-3.5 text-emerald-500";
+      } else {
+        input.classList.remove("border-emerald-500", "bg-emerald-50/30");
+        if (val.length > 0) {
+          statusText.textContent = `${val.length}/10 أرقام`;
+          statusText.className = "text-[10px] font-bold text-amber-600";
+        } else {
+          statusText.textContent = "10 أرقام";
+          statusText.className = "text-[10px] font-bold text-slate-400";
+        }
+        checkIcon.className = "absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-300";
+      }
+    }
+
+    // Image switcher (MagneSteps Visuals)
+    const heroGalleryData = {
+      intro: {
+        src: 'images/man-presentation.jpg',
+        overlay: '👤 تعرّف على MagneSteps • نعل بنقاط تدليك ومغناطيسات حيوية • قابل للقص حسب المقاس'
+      },
+      comfort: {
+        src: 'images/comfort-step.jpg',
+        overlay: '🦶 راحة لقدميك مع كل خطوة • نعل أصلي بنقاط تدليك ومغناطيسات'
+      },
+      reflexology: {
+        src: 'images/reflexology.jpg',
+        overlay: '⚡ نقاط الوخز الإبري والتدليك الطبي لتسكين آلام أسفل الظهر، الركبتين والمفاصل'
+      }
+    };
+
+    function changeImg(type) {
+      const mainImg = document.getElementById("mainDisplayImg");
+      const overlayText = document.getElementById("heroImgOverlayText");
+      const data = heroGalleryData[type];
+      if (!data) return;
+
+      mainImg.src = data.src;
+      if (overlayText) overlayText.textContent = data.overlay;
+
+      document.querySelectorAll(".thumb-btn").forEach(btn => {
+        if (btn.dataset.type === type) {
+          btn.classList.add("border-amber-500", "bg-slate-800");
+          btn.classList.remove("border-transparent", "bg-slate-900/90");
+        } else {
+          btn.classList.remove("border-amber-500", "bg-slate-800");
+          btn.classList.add("border-transparent", "bg-slate-900/90");
+        }
+      });
+    }
+
+    // Pack Selector
+    let selectedPackData = { count: 2, price: 299, title: "باك 2 أزواج (الأكثر مبيعاً)" };
+
+    function selectPack(count, price) {
+      selectedPackData.count = count;
+      selectedPackData.price = price;
+
+      [1, 2, 3].forEach(num => {
+        const card = document.getElementById(`packCard-${num}`);
+        const radio = document.getElementById(`radio-${num}`);
+        if (num === count) {
+          card.classList.add("border-amber-500", "bg-amber-50/70");
+          card.classList.remove("border-slate-200", "bg-white");
+          radio.checked = true;
+        } else {
+          card.classList.remove("border-amber-500", "bg-amber-50/70");
+          card.classList.add("border-slate-200", "bg-white");
+          radio.checked = false;
+        }
+      });
+
+      if (count === 1) selectedPackData.title = "باك زوج واحد (للتجربة)";
+      if (count === 2) selectedPackData.title = "باك 2 أزواج (الأكثر طلباً)";
+      if (count === 3) selectedPackData.title = "باك العائلة (3 أزواج)";
+
+      document.getElementById("summaryPackTitle").textContent = selectedPackData.title;
+      document.getElementById("summaryTotal").textContent = `${selectedPackData.price} درهم`;
+      
+      const stickyPrice = document.getElementById("stickyPriceText");
+      if (stickyPrice) stickyPrice.textContent = `${selectedPackData.price} درهم`;
+    }
+
+    // Countdown Timer
+    function startHeaderTimer(duration) {
+      let timer = duration;
+      const display = document.getElementById("headerTimer");
+      setInterval(() => {
+        const minutes = parseInt(timer / 60, 10);
+        const seconds = parseInt(timer % 60, 10);
+        const mStr = minutes < 10 ? "0" + minutes : minutes;
+        const sStr = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = `00:${mStr}:${sStr}`;
+        if (--timer < 0) timer = duration;
+      }, 1000);
+    }
+
+    // Live Sales Notifications (Moroccan Cities)
+    const buyers = [
+      { name: "محمد من الدار البيضاء", pack: "باك 2 أزواج", time: "منذ 3 دقائق" },
+      { name: "فاطمة من فاس", pack: "باك 2 أزواج", time: "منذ دقيقتين" },
+      { name: "يوسف من طنجة", pack: "باك 1 زوج", time: "منذ 5 دقائق" },
+      { name: "سعيد من مراكش", pack: "باك 3 أزواج", time: "منذ دقيقة" },
+      { name: "خالد من الرباط", pack: "باك 2 أزواج", time: "منذ 4 دقائق" },
+      { name: "نادية من أكادير", pack: "باك 2 أزواج", time: "منذ 7 دقائق" },
+      { name: "حسن من وجدة", pack: "باك 1 زوج", time: "منذ 6 دقائق" }
+    ];
+
+    function startFakeSalesPopups() {
+      const popup = document.getElementById("salesPopup");
+      let idx = 0;
+
+      function showNext() {
+        const buyer = buyers[idx % buyers.length];
+        document.getElementById("popupName").textContent = buyer.name;
+        document.getElementById("popupTime").textContent = buyer.time;
+
+        popup.classList.remove("translate-y-24", "opacity-0");
+        popup.classList.add("translate-y-0", "opacity-100");
+
+        setTimeout(() => {
+          popup.classList.add("translate-y-24", "opacity-0");
+          popup.classList.remove("translate-y-0", "opacity-100");
+          idx++;
+        }, 4500);
+      }
+
+      setTimeout(() => {
+        showNext();
+        setInterval(showNext, 12000);
+      }, 3000);
+    }
+
+    // FAQ Toggle
+    function toggleFaq(num) {
+      const ans = document.getElementById(`faq-ans-${num}`);
+      const icon = document.getElementById(`faq-icon-${num}`);
+      if (ans.classList.contains("hidden")) {
+        ans.classList.remove("hidden");
+        icon.classList.add("rotate-180");
+      } else {
+        ans.classList.add("hidden");
+        icon.classList.remove("rotate-180");
+      }
+    }
+
+    // Timestamp for bot submission speed detection
+    const pageLoadTimestamp = Date.now();
+
+    // Check for fake Moroccan phone sequences
+    function isFakePhone(phone) {
+      if (!/^(06|07|05)[0-9]{8}$/.test(phone)) return true;
+
+      const suffix = phone.slice(2);
+      
+      // Block repeated digits (e.g., 00000000, 11111111, 22222222...)
+      if (/^(\d)\1{7}$/.test(suffix)) return true;
+      
+      // Block known fake sequences
+      const knownFakes = [
+        "12345678", "87654321", "01234567", "76543210",
+        "00112233", "11223344", "00001111", "12121212",
+        "98765432", "23456789"
+      ];
+      if (knownFakes.includes(suffix)) return true;
+
+      return false;
+    }
+
+    // Check for fake / troll names
+    function isFakeName(str) {
+      if (!str || str.length < 3) return true;
+      if (/^\d+$/.test(str)) return true;
+      const lower = str.toLowerCase().trim();
+      const trollWords = ["test", "azerty", "asdf", "qwerty", "fake", "dfgh", "ghjk", "fghj", "aaaa", "bbbb", "cccc", "xxxx"];
+      return trollWords.some(w => lower.includes(w));
+    }
+
+    // Handle Form Submit with Multi-Layer Anti-Fake Order Shield
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+
+      // 1. Anti-Bot Honeypot trap check
+      const hp = document.getElementById("formHoneypot");
+      if (hp && hp.value) {
+        console.warn("Bot submission blocked via honeypot.");
+        return;
+      }
+
+      // 2. Submission speed check (Bots submit in under 1.5 seconds)
+      if (Date.now() - pageLoadTimestamp < 1500) {
+        console.warn("Bot submission blocked: submitted too fast.");
+        return;
+      }
+
+      const name = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phoneNumber").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const submitBtn = document.getElementById("submitBtn");
+
+      // 3. Name validation
+      if (!name || isFakeName(name)) {
+        alert("يرجى كتابة الاسم واللقب الحقيقي (مثال: محمد العلمي).");
+        document.getElementById("fullName").focus();
+        return;
+      }
+
+      // 4. Phone validation & fake sequence blocker
+      if (isFakePhone(phone)) {
+        alert("⚠️ رقم الهاتف غير صحيح أو وهمي!\nيرجى إدخال رقم هاتف مغربي حقيقي شغال (06 أو 07 أو 05) ليتصل بكم الموزع قبل التوصيل.");
+        document.getElementById("phoneNumber").focus();
+        return;
+      }
+
+      // 5. Address validation
+      if (!address || address.length < 5 || isFakeName(address)) {
+        alert("يرجى إدخال المدينة والعنوان الكامل لتسليم الكولية.");
+        document.getElementById("address").focus();
+        return;
+      }
+
+      // 6. Anti-Duplicate submission protection (Rate limiting per phone: 60s)
+      const lastPhone = localStorage.getItem("magne_last_phone");
+      const lastTime = parseInt(localStorage.getItem("magne_last_time") || "0", 10);
+      const now = Date.now();
+
+      if (lastPhone === phone && (now - lastTime) < 60 * 1000) {
+        alert("✅ لقد تم تسجيل طلبكم بهذا الرقم للتو وهو قيد المعالجة!\nسنتصل بكم هاتفياً في أقرب وقت لتأكيده.");
+        return;
+      }
+
+      // 7. Prevent accidental double-clicks on Submit button
+      submitBtn.disabled = true;
+      const originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl"></i><span>جاري تأكيد الطلب...</span>';
+
+      // Save submission to prevent immediate duplicates
+      localStorage.setItem("magne_last_phone", phone);
+      localStorage.setItem("magne_last_time", now.toString());
+
+      // Populate Modal
+      document.getElementById("modalName").textContent = name;
+      document.getElementById("modalPhone").textContent = phone;
+      document.getElementById("modalAddress").textContent = address;
+      document.getElementById("modalPack").textContent = selectedPackData.title;
+      document.getElementById("modalTotal").textContent = `${selectedPackData.price} درهم (توصيل مجاني)`;
+
+      // WhatsApp 1-Click Confirmation Link Generator
+      const merchantWhatsApp = "212600000000"; // Replace with your Moroccan WhatsApp
+      const waMsg = encodeURIComponent(
+        `السلام عليكم، بغيت نأكد طلبيتي ديال فرشات MagneSteps:\n` +
+        `👤 الاسم: ${name}\n` +
+        `📱 الهاتف: ${phone}\n` +
+        `📍 المدينة والعنوان: ${address}\n` +
+        `📦 العرض: ${selectedPackData.title}\n` +
+        `💵 الثمن: ${selectedPackData.price} درهم (الدفع عند الاستلام)\n` +
+        `شكراً، المرجو شحن الطلب في أقرب وقت.`
+      );
+      document.getElementById("whatsappConfirmBtn").href = `https://wa.me/${merchantWhatsApp}?text=${waMsg}`;
+
+      setTimeout(() => {
+        document.getElementById("thankYouModal").classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+      }, 500);
+
+      const orderData = {
+        id: "CMD-" + Date.now().toString().slice(-6),
+        name,
+        phone,
+        address,
+        pack: selectedPackData.title,
+        price: selectedPackData.price,
+        status: "en_attente",
+        date: new Date().toLocaleDateString('fr-FR'),
+        time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+        timestamp: new Date().toISOString()
+      };
+
+      // 1. Send order directly to backend API (Node server)
+      const apiUrl = window.location.protocol.startsWith('http') ? '/api/orders' : 'http://localhost:5500/api/orders';
+      try {
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        }).then(res => res.json()).then(data => {
+          console.log("Order saved on server:", data);
+        }).catch(err => {
+          console.warn("API save warning (will fallback to localStorage):", err);
+        });
+      } catch (e) {
+        console.error("Fetch error:", e);
+      }
+
+      // 2. Also save into localStorage as backup and instant local access
+      try {
+        let existingOrders = JSON.parse(localStorage.getItem("magne_cod_orders") || "[]");
+        existingOrders.unshift(orderData);
+        localStorage.setItem("magne_cod_orders", JSON.stringify(existingOrders));
+      } catch (err) {
+        console.error("Storage error:", err);
+      }
+
+      console.log("Verified Genuine Moroccan COD Order Saved:", orderData);
+    }
+
+    function closeModal() {
+      document.getElementById("thankYouModal").classList.add("hidden");
+      document.getElementById("codOrderForm").reset();
+      selectPack(2, 299);
+    }
+  </script>
+</body>
+</html>

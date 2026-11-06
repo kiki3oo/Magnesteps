@@ -1,0 +1,6 @@
+.git
+.gitignore
+magnesteps.zip
+node_modules
+*.log
+.DS_Store
