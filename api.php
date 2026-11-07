@@ -104,7 +104,7 @@ if ($method === 'POST') {
             else if (stripos($order['pack'], '3') !== false || stripos($order['pack'], 'ثلاثة') !== false) $qty = 3;
         }
         $payload = json_encode([
-            'webhookSecret' => 'whsec_magnesteps_maroc_2026',
+            'webhookSecret' => 'whsec_magnesteps_maroc_b7eb3a3c',
             'customerName' => $order['name'] ?? '',
             'customerPhone' => $order['phone'] ?? '',
             'customerCity' => $order['city'] ?? ($order['address'] ?? 'Maroc'),

@@ -10,7 +10,7 @@ const ORDERS_FILE = path.join(BASE_DIR, 'orders.json');
 // Sanadokom ERP Webhook Integration
 const SANADOKOM_CONFIG = {
   webhookUrl: process.env.SANADOKOM_WEBHOOK_URL || 'https://app.rovanx.com/api/webhooks/orders',
-  webhookSecret: process.env.SANADOKOM_WEBHOOK_SECRET || 'whsec_magnesteps_maroc_2026',
+  webhookSecret: process.env.SANADOKOM_WEBHOOK_SECRET || 'whsec_magnesteps_maroc_b7eb3a3c',
   enabled: true
 };
 
