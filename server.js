@@ -1,10 +1,90 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 5500;
 const BASE_DIR = __dirname;
 const ORDERS_FILE = path.join(BASE_DIR, 'orders.json');
+
+// Sanadokom ERP Webhook Integration
+const SANADOKOM_CONFIG = {
+  webhookUrl: process.env.SANADOKOM_WEBHOOK_URL || 'https://app.rovanx.com/api/webhooks/orders',
+  webhookSecret: process.env.SANADOKOM_WEBHOOK_SECRET || 'whsec_magnesteps_maroc_e1a723f6',
+  enabled: true
+};
+
+function forwardToSanadokom(order) {
+  try {
+    if (!SANADOKOM_CONFIG.enabled || !SANADOKOM_CONFIG.webhookUrl) return;
+
+    const url = new URL(SANADOKOM_CONFIG.webhookUrl);
+
+    let quantity = 1;
+    if (order.pack && (order.pack.includes('زوجين') || order.pack.includes('2'))) {
+      quantity = 2;
+    } else if (order.pack && (order.pack.includes('3') || order.pack.includes('ثلاثة'))) {
+      quantity = 3;
+    }
+
+    const payload = JSON.stringify({
+      webhookSecret: SANADOKOM_CONFIG.webhookSecret,
+      customerName: order.name,
+      customerPhone: order.phone,
+      customerCity: order.city || order.address || 'Maroc',
+      customerAddress: order.address || '',
+      customerNote: `Pack: ${order.pack || 'Standard'} • CMD: ${order.id}`,
+      totalAmount: Number(order.price) || 199,
+      items: [
+        {
+          sku: 'MAGNE-STEPS-01',
+          productName: 'فرشات MagneSteps الطبية الأصلية',
+          quantity: quantity,
+          unitPrice: Math.round((Number(order.price) || 199) / quantity)
+        }
+      ],
+      source: order.utmSource || 'MagneSteps Landing Page',
+      utmSource: order.utmSource || null,
+      utmCampaign: order.utmCampaign || null,
+      adSet: order.adSet || null
+    });
+
+    const isHttps = url.protocol === 'https:';
+    const client = isHttps ? https : http;
+
+    const req = client.request({
+      hostname: url.hostname,
+      port: url.port || (isHttps ? 443 : 80),
+      path: url.pathname + url.search,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      },
+      timeout: 8000
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => {
+        console.log(`[Sanadokom Sync] Order ${order.id} -> HTTP ${res.statusCode}:`, data);
+      });
+    });
+
+    req.on('error', (err) => {
+      console.warn(`[Sanadokom Sync Error] Order ${order.id}:`, err.message);
+    });
+
+    req.on('timeout', () => {
+      req.destroy();
+      console.warn(`[Sanadokom Sync Timeout] Order ${order.id}`);
+    });
+
+    req.write(payload);
+    req.end();
+  } catch (err) {
+    console.error('[Sanadokom Forward Exception]:', err.message);
+  }
+}
 
 // Ensure orders.json exists
 if (!fs.existsSync(ORDERS_FILE)) {
@@ -86,6 +166,9 @@ const server = http.createServer((req, res) => {
             orders.unshift(newOrder);
           }
           saveOrders(orders);
+          
+          // Forward directly to Sanadokom COD ERP platform
+          forwardToSanadokom(newOrder);
 
           console.log(`[Order Saved] ${newOrder.id} - ${newOrder.name} (${newOrder.phone}) - ${newOrder.price} DH`);
 

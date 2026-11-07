@@ -94,6 +94,41 @@ if ($method === 'POST') {
     }
 
     saveOrders($ordersFile, $orders);
+
+    // Forward to Sanadokom COD Platform
+    try {
+        $ch = curl_init('https://app.rovanx.com/api/webhooks/orders');
+        $qty = 1;
+        if (!empty($order['pack'])) {
+            if (stripos($order['pack'], 'زوجين') !== false || stripos($order['pack'], '2') !== false) $qty = 2;
+            else if (stripos($order['pack'], '3') !== false || stripos($order['pack'], 'ثلاثة') !== false) $qty = 3;
+        }
+        $payload = json_encode([
+            'webhookSecret' => 'whsec_magnesteps_maroc_e1a723f6',
+            'customerName' => $order['name'] ?? '',
+            'customerPhone' => $order['phone'] ?? '',
+            'customerCity' => $order['city'] ?? ($order['address'] ?? 'Maroc'),
+            'customerAddress' => $order['address'] ?? '',
+            'customerNote' => 'Pack: ' . ($order['pack'] ?? 'Standard') . ' • CMD: ' . ($order['id'] ?? ''),
+            'totalAmount' => floatval($order['price'] ?? 199),
+            'items' => [
+                [
+                    'sku' => 'MAGNE-STEPS-01',
+                    'productName' => 'فرشات MagneSteps الطبية الأصلية',
+                    'quantity' => $qty,
+                    'unitPrice' => round(floatval($order['price'] ?? 199) / $qty)
+                ]
+            ],
+            'source' => $order['utmSource'] ?? 'MagneSteps Landing Page'
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        @curl_exec($ch);
+        curl_close($ch);
+    } catch (\Throwable $e) {}
+
     http_response_code(201);
     echo json_encode(['success' => true, 'order' => $order]);
     exit;

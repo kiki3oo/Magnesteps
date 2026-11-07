@@ -1664,6 +1664,12 @@
         submitBtn.innerHTML = originalBtnHtml;
       }, 500);
 
+      // Capture UTM & Ad tracking parameters from URL for Sanadokom ERP
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmSource = urlParams.get('utm_source') || urlParams.get('source');
+      const utmCampaign = urlParams.get('utm_campaign') || urlParams.get('campaign');
+      const adSet = urlParams.get('adset') || urlParams.get('ad_set') || urlParams.get('adgroup');
+
       const orderData = {
         id: "CMD-" + Date.now().toString().slice(-6),
         name,
@@ -1672,6 +1678,9 @@
         pack: selectedPackData.title,
         price: selectedPackData.price,
         status: "en_attente",
+        utmSource: utmSource || "Landing Page",
+        utmCampaign: utmCampaign || null,
+        adSet: adSet || null,
         date: new Date().toLocaleDateString('fr-FR'),
         time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
         timestamp: new Date().toISOString()
