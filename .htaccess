@@ -1,15 +1,32 @@
 # Enable URL Rewriting
 RewriteEngine On
 
-# Route /api/orders to api.php (for standard cPanel / Apache / Hostinger hosting)
+# Route /api/orders to api.php (cPanel / Apache / Hostinger)
 RewriteRule ^api/orders$ api.php [QSA,L]
 RewriteRule ^api/orders/export$ api.php?export=csv [QSA,L]
 
-# Security: Block direct browser access to orders.json to protect customer data
-<Files "orders.json">
-    Order Allow,Deny
-    Deny from all
-</Files>
+# Security: block the data folder (customer orders)
+RewriteRule ^data(/|$) - [F,L]
+
+# Security: block hidden files (.git, .env...) and private/server files
+RewriteRule (^|/)\. - [F,L]
+<FilesMatch "^(orders\.json|config\.php|config\.example\.php|server\.js|package\.json|Dockerfile|README\.md|.*\.zip|.*\.log|.*\.tmp)$">
+    Require all denied
+</FilesMatch>
+
+# No directory listing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    <Files "admin.html">
+        Header set X-Robots-Tag "noindex, nofollow"
+        Header set Cache-Control "no-store"
+    </Files>
+</IfModule>
 
 # Compress HTML, CSS, JavaScript, Text, XML and fonts
 <IfModule mod_deflate.c>

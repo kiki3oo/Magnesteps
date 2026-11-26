@@ -4,3 +4,9 @@ magnesteps.zip
 node_modules
 *.log
 .DS_Store
+data
+orders.json
+config.php
+.env
+api.php
+.htaccess

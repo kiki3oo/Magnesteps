@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم والإدارة | MagneSteps™ COD Maroc</title>
@@ -59,14 +60,14 @@
       
       <form onsubmit="handleLogin(event)" class="space-y-4">
         <div>
-          <input type="password" id="pinInput" placeholder="الرمز السري (الافتراضي: 1234)" autofocus maxlength="8" class="w-full text-center tracking-widest text-lg font-mono py-3 px-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none">
+          <input type="password" id="pinInput" placeholder="كلمة السر ديال الأدمين" autofocus maxlength="100" autocomplete="current-password" class="w-full text-center tracking-widest text-lg font-mono py-3 px-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none">
           <span id="loginError" class="text-xs text-red-500 font-bold mt-1.5 hidden block">الرمز السري غير صحيح، حاول ثانية.</span>
         </div>
         <button type="submit" class="w-full bg-gradient-to-r from-dark-900 to-slate-900 hover:from-slate-900 hover:to-dark-950 text-amber-400 font-bold py-3 px-4 rounded-xl shadow transition">
           تسجيل الدخول
         </button>
       </form>
-      <p class="text-[10px] text-slate-400 mt-4">رمز الدخول الافتراضي: <strong>1234</strong> (يمكنك تغييره من الإعدادات)</p>
+      <p class="text-[10px] text-slate-400 mt-4">كلمة السر كتحدد فالسيرفر (ADMIN_PASSWORD)</p>
     </div>
   </div>
 
@@ -342,33 +343,44 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    const DEFAULT_PIN = "1234";
     const STORAGE_KEY = "magne_cod_orders";
     const API_BASE = window.location.protocol.startsWith('http') ? '' : 'http://localhost:5500';
     let ordersList = [];
 
+    // Admin key (kept only for this browser tab, verified by the server on every request)
+    const ADMIN_KEY_STORAGE = "magne_admin_key";
+    function adminKey() { return sessionStorage.getItem(ADMIN_KEY_STORAGE) || ""; }
+    function authHeaders(extra = {}) { return { ...extra, "X-Admin-Key": adminKey() }; }
+
     // Check Auth State on load
     document.addEventListener("DOMContentLoaded", () => {
-      const isAuth = sessionStorage.getItem("magne_admin_auth");
-      if (isAuth === "true") {
+      sessionStorage.removeItem("magne_admin_auth"); // old insecure flag
+      if (adminKey()) {
         showAdminApp();
       }
     });
 
-    // Handle Login
-    function handleLogin(e) {
+    // Handle Login: the server checks the password
+    async function handleLogin(e) {
       e.preventDefault();
-      const enteredPin = document.getElementById("pinInput").value;
+      const enteredKey = document.getElementById("pinInput").value;
       const errorMsg = document.getElementById("loginError");
-
-      if (enteredPin === DEFAULT_PIN) {
-        sessionStorage.setItem("magne_admin_auth", "true");
-        errorMsg.classList.add("hidden");
-        showAdminApp();
-      } else {
-        errorMsg.classList.remove("hidden");
-        document.getElementById("pinInput").value = "";
+      try {
+        const res = await fetch(`${API_BASE}/api/orders`, { headers: { "X-Admin-Key": enteredKey } });
+        if (res.ok) {
+          sessionStorage.setItem(ADMIN_KEY_STORAGE, enteredKey);
+          errorMsg.classList.add("hidden");
+          showAdminApp();
+          return;
+        }
+        errorMsg.textContent = res.status === 429
+          ? "بزاف ديال المحاولات، عاود من بعد 15 دقيقة."
+          : "كلمة السر غير صحيحة، حاول ثانية.";
+      } catch (err) {
+        errorMsg.textContent = "ما قدرناش نتصلو بالسيرفر.";
       }
+      errorMsg.classList.remove("hidden");
+      document.getElementById("pinInput").value = "";
     }
 
     let pollInterval = null;
@@ -394,7 +406,7 @@
 
     function logout() {
       if (pollInterval) clearInterval(pollInterval);
-      sessionStorage.removeItem("magne_admin_auth");
+      sessionStorage.removeItem(ADMIN_KEY_STORAGE);
       location.reload();
     }
 
@@ -402,7 +414,8 @@
     async function loadOrders(force = false) {
       let dataChanged = false;
       try {
-        const res = await fetch(`${API_BASE}/api/orders`);
+        const res = await fetch(`${API_BASE}/api/orders`, { headers: authHeaders() });
+        if (res.status === 401) { logout(); return; }
         if (res.ok) {
           const apiOrders = await res.json();
           // Merge any orders found in localStorage that weren't synced yet
@@ -413,7 +426,7 @@
               merged.push(lo);
               fetch(`${API_BASE}/api/orders`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: authHeaders({ 'Content-Type': 'application/json' }),
                 body: JSON.stringify(lo)
               }).catch(() => {});
             }
@@ -450,6 +463,11 @@
       updateKPIs();
     }
 
+    // Escape any customer-provided text before inserting it into HTML (anti-XSS)
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"'`]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c]));
+    }
+
     // Render Orders in Table
     function renderOrders(orders) {
       const tbody = document.getElementById("ordersTableBody");
@@ -470,7 +488,7 @@
         const currentConf = statusConfigs[order.status] || statusConfigs.en_attente;
 
         // Clean phone for links
-        const cleanPhone = order.phone.replace(/[^0-9]/g, '');
+        const cleanPhone = String(order.phone || '').replace(/[^0-9]/g, '');
         const intlPhone = cleanPhone.startsWith('0') ? '212' + cleanPhone.slice(1) : cleanPhone;
 
         // WhatsApp confirmation message
@@ -482,20 +500,20 @@
 
         tr.innerHTML = `
           <td class="p-3.5">
-            <span class="font-mono font-bold text-slate-900 block">${order.id || '#CMD-' + (1000 + index)}</span>
-            <span class="text-[10px] text-slate-400 block">${order.date || 'اليوم'} • ${order.time || ''}</span>
+            <span class="font-mono font-bold text-slate-900 block">${esc(order.id || '#CMD-' + (1000 + index))}</span>
+            <span class="text-[10px] text-slate-400 block">${esc(order.date || 'اليوم')} • ${esc(order.time || '')}</span>
           </td>
 
           <td class="p-3.5">
-            <span class="font-bold text-slate-900 block">${order.name}</span>
+            <span class="font-bold text-slate-900 block">${esc(order.name)}</span>
           </td>
 
           <td class="p-3.5">
             <div class="flex items-center gap-2">
-              <span class="font-mono font-bold text-slate-800 text-xs">${order.phone}</span>
+              <span class="font-mono font-bold text-slate-800 text-xs">${esc(order.phone)}</span>
               
               <!-- Direct Call Button -->
-              <a href="tel:${order.phone}" class="w-7 h-7 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 flex items-center justify-center transition" title="اتصال هاتفي مباشر">
+              <a href="tel:${esc(cleanPhone)}" class="w-7 h-7 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 flex items-center justify-center transition" title="اتصال هاتفي مباشر">
                 <i class="fa-solid fa-phone text-xs"></i>
               </a>
 
@@ -507,16 +525,16 @@
           </td>
 
           <td class="p-3.5 max-w-xs">
-            <p class="text-slate-600 truncate" title="${order.address}">${order.address}</p>
+            <p class="text-slate-600 truncate" title="${esc(order.address)}">${esc(order.address)}</p>
           </td>
 
           <td class="p-3.5 whitespace-nowrap">
-            <span class="font-bold text-slate-900 block">${order.price} درهم</span>
-            <span class="text-[10px] text-slate-500 block truncate max-w-[120px]">${order.pack}</span>
+            <span class="font-bold text-slate-900 block">${esc(order.price)} درهم</span>
+            <span class="text-[10px] text-slate-500 block truncate max-w-[120px]">${esc(order.pack)}</span>
           </td>
 
           <td class="p-3.5">
-            <select onchange="updateOrderStatus('${order.id}', this.value, this)" class="text-xs font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 outline-none transition cursor-pointer ${currentConf.bg}">
+            <select onchange="updateOrderStatus(this.dataset.id, this.value, this)" data-id="${esc(order.id)}" class="text-xs font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 outline-none transition cursor-pointer ${currentConf.bg}">
               <option value="en_attente" ${order.status === 'en_attente' ? 'selected' : ''}>🟡 في الانتظار</option>
               <option value="confirme" ${order.status === 'confirme' ? 'selected' : ''}>🔵 تم التأكيد</option>
               <option value="en_livraison" ${order.status === 'en_livraison' ? 'selected' : ''}>🚚 خرج للتوصيل</option>
@@ -526,7 +544,7 @@
           </td>
 
           <td class="p-3.5 text-center">
-            <button onclick="deleteOrder('${order.id}')" class="text-slate-400 hover:text-red-500 p-1.5 transition" title="حذف الطلب">
+            <button onclick="deleteOrder(this.dataset.id)" data-id="${esc(order.id)}" class="text-slate-400 hover:text-red-500 p-1.5 transition" title="حذف الطلب">
               <i class="fa-solid fa-trash-can text-sm"></i>
             </button>
           </td>
@@ -555,7 +573,7 @@
       try {
         await fetch(`${API_BASE}/api/orders`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ id: orderId, status: newStatus })
         });
       } catch (err) {
@@ -573,8 +591,9 @@
         updateKPIs();
 
         try {
-          await fetch(`${API_BASE}/api/orders?id=${orderId}`, {
-            method: 'DELETE'
+          await fetch(`${API_BASE}/api/orders?id=${encodeURIComponent(orderId)}`, {
+            method: 'DELETE',
+            headers: authHeaders()
           });
         } catch (err) {
           console.warn("API delete failed:", err);
@@ -642,7 +661,8 @@
       csv += "Reference,Date,Heure,Nom Client,Telephone,Ville et Adresse,Produit,Prix MAD,Statut\n";
 
       ordersList.forEach(o => {
-        csv += `"${o.id || ''}","${o.date || ''}","${o.time || ''}","${(o.name || '').replace(/"/g, '""')}","${o.phone || ''}","${(o.address || '').replace(/"/g, '""')}","${(o.pack || '').replace(/"/g, '""')}","${o.price || ''}","${o.status || ''}"\n`;
+        const cell = v => { let t = String(v == null ? '' : v); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"'; };
+        csv += [o.id, o.date, o.time, o.name, o.phone, o.address, o.pack, o.price, o.status].map(cell).join(",") + "\n";
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -700,7 +720,7 @@
       try {
         await fetch(`${API_BASE}/api/orders`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify(newOrder)
         });
       } catch (err) {
@@ -756,7 +776,7 @@
       demoOrders.forEach(o => {
         fetch(`${API_BASE}/api/orders`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify(o)
         }).catch(() => {});
       });

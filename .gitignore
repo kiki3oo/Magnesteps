@@ -2,3 +2,10 @@
 node_modules/
 magnesteps.zip
 *.log
+*.tmp
+
+# Customer data & secrets: never in Git
+data/
+orders.json
+config.php
+.env
