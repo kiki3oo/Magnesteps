@@ -417,22 +417,9 @@
         const res = await fetch(`${API_BASE}/api/orders`, { headers: authHeaders() });
         if (res.status === 401) { logout(); return; }
         if (res.ok) {
-          const apiOrders = await res.json();
-          // Merge any orders found in localStorage that weren't synced yet
-          const localStored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-          const merged = [...apiOrders];
-          localStored.forEach(lo => {
-            if (!merged.find(m => m.id === lo.id)) {
-              merged.push(lo);
-              fetch(`${API_BASE}/api/orders`, {
-                method: 'POST',
-                headers: authHeaders({ 'Content-Type': 'application/json' }),
-                body: JSON.stringify(lo)
-              }).catch(() => {});
-            }
-          });
-          ordersList = merged;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(ordersList));
+          // The server is the only source of truth (no more re-sending local copies -> no duplicates)
+          ordersList = await res.json();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(ordersList)); // offline cache only
         } else {
           ordersList = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
         }
@@ -461,6 +448,16 @@
         }
       }
       updateKPIs();
+    }
+
+    // Date/time shown in the admin's own local time (from the server timestamp)
+    function orderDate(o) {
+      const d = o.timestamp ? new Date(o.timestamp) : null;
+      return d && !isNaN(d) ? d.toLocaleDateString('fr-FR') : (o.date || '');
+    }
+    function orderTime(o) {
+      const d = o.timestamp ? new Date(o.timestamp) : null;
+      return d && !isNaN(d) ? d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : (o.time || '');
     }
 
     // Escape any customer-provided text before inserting it into HTML (anti-XSS)
@@ -540,7 +537,7 @@
         tr.innerHTML = `
           <td class="p-3.5">
             <span class="font-mono font-bold text-slate-900 block">${esc(order.id || '#CMD-' + (1000 + index))}</span>
-            <span class="text-[10px] text-slate-400 block">${esc(order.date || 'اليوم')} • ${esc(order.time || '')}</span>
+            <span class="text-[10px] text-slate-400 block">${esc(orderDate(order) || 'اليوم')} • ${esc(orderTime(order))}</span>
           </td>
 
           <td class="p-3.5">
@@ -705,7 +702,7 @@
 
       ordersList.forEach(o => {
         const cell = v => { let t = String(v == null ? '' : v); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"'; };
-        csv += [o.id, o.date, o.time, o.name, o.phone, o.address, o.pack, o.price, o.status].map(cell).join(",") + "\n";
+        csv += [o.id, orderDate(o), orderTime(o), o.name, o.phone, o.address, o.pack, o.price, o.status].map(cell).join(",") + "\n";
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

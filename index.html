@@ -1727,14 +1727,8 @@
         console.error("Fetch error:", e);
       }
 
-      // 2. Also save into localStorage as backup and instant local access
-      try {
-        let existingOrders = JSON.parse(localStorage.getItem("magne_cod_orders") || "[]");
-        existingOrders.unshift(orderData);
-        localStorage.setItem("magne_cod_orders", JSON.stringify(existingOrders));
-      } catch (err) {
-        console.error("Storage error:", err);
-      }
+      // Customer data is no longer copied into the visitor's browser (privacy + no duplicates in admin)
+      try { localStorage.removeItem("magne_cod_orders"); } catch (err) {}
 
       console.log("Verified Genuine Moroccan COD Order Saved:", orderData);
     }
