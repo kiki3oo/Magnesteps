@@ -468,6 +468,45 @@
       return String(v == null ? '' : v).replace(/[&<>"'`]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c]));
     }
 
+    // Fraud indicators (computed by the server)
+    function fraudBadges(order) {
+      const f = order.flags;
+      if (!f) return "";
+      const b = [];
+      const badge = (cls, icon, text, title) =>
+        `<span class="inline-flex items-center gap-1 mt-1 ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${cls}" title="${esc(title)}"><i class="fa-solid ${icon}"></i>${esc(text)}</span>`;
+      if (f.blocked) b.push(badge("bg-red-600 text-white", "fa-ban", "محظور", "هاد الرقم ولا الجهاز ولا الـ IP محظور"));
+      if (f.sameDevice > 0) b.push(badge("bg-red-100 text-red-700", "fa-mobile-screen", `نفس الجهاز: ${f.sameDevice + 1} طلبيات`, "نفس الجهاز دار طلبيات أخرى بأرقام أو أسماء مختلفة"));
+      if (f.phoneCancelledBefore) b.push(badge("bg-orange-100 text-orange-700", "fa-rotate-left", "رفض قبل", "هاد الرقم عندو طلبية ملغية قبل"));
+      if (f.samePhone > 0) b.push(badge("bg-amber-100 text-amber-800", "fa-phone", `الرقم مكرر: ${f.samePhone + 1}`, "نفس الرقم كاين فطلبيات أخرى"));
+      if (f.sameIp > 0) b.push(badge("bg-slate-100 text-slate-600", "fa-globe", `نفس IP: ${f.sameIp + 1}`, "نفس الـ IP. انتبه: ناس بزاف كيتقاسمو IP فالـ 4G، ماشي دليل بوحدو"));
+      return b.length ? `<div class="flex flex-wrap">${b.join("")}</div>` : "";
+    }
+
+    // Block / unblock a customer (phone + device, and optionally the IP)
+    async function toggleBlock(orderId, block) {
+      let blockIp = false;
+      if (block) {
+        if (!confirm("واش باغي تحظر هاد الزبون؟\nالرقم والجهاز ديالو غادي يتحظرو، والطلبيات ديالو اللي فالانتظار غادي يتلغاو.\nأي طلبية جديدة منو غادي تترفض بلا ما يعرف.")) return;
+        blockIp = confirm("واش تحظر حتى الـ IP ديالو؟\n\n⚠️ ما ننصحش بيها إلا كان كيبدل الجهاز: بزاف ديال الناس فالـ 4G كيتقاسمو نفس الـ IP، وتقدر تحظر زبناء حقيقيين.\n\nOK = نعم، حظر الـ IP\nAnnuler = لا، غير الرقم والجهاز");
+      } else if (!confirm("واش باغي ترفع الحظر على هاد الزبون؟")) {
+        return;
+      }
+      try {
+        const res = await fetch(`${API_BASE}/api/block`, {
+          method: "POST",
+          headers: authHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({ orderId, block, blockIp })
+        });
+        if (res.status === 401) { logout(); return; }
+        if (!res.ok) throw new Error("HTTP " + res.status);
+      } catch (err) {
+        alert("ما قدرناش نسجلو الحظر، عاود من بعد.");
+        return;
+      }
+      loadOrders(true);
+    }
+
     // Render Orders in Table
     function renderOrders(orders) {
       const tbody = document.getElementById("ordersTableBody");
@@ -506,6 +545,7 @@
 
           <td class="p-3.5">
             <span class="font-bold text-slate-900 block">${esc(order.name)}</span>
+            ${fraudBadges(order)}
           </td>
 
           <td class="p-3.5">
@@ -543,7 +583,10 @@
             </select>
           </td>
 
-          <td class="p-3.5 text-center">
+          <td class="p-3.5 text-center whitespace-nowrap">
+            <button onclick="toggleBlock(this.dataset.id, ${order.flags && order.flags.blocked ? 'false' : 'true'})" data-id="${esc(order.id)}" class="${order.flags && order.flags.blocked ? 'text-red-600 hover:text-slate-500' : 'text-slate-400 hover:text-red-600'} p-1.5 transition" title="${order.flags && order.flags.blocked ? 'رفع الحظر' : 'حظر هاد الزبون (الرقم + الجهاز)'}">
+              <i class="fa-solid ${order.flags && order.flags.blocked ? 'fa-lock-open' : 'fa-ban'} text-sm"></i>
+            </button>
             <button onclick="deleteOrder(this.dataset.id)" data-id="${esc(order.id)}" class="text-slate-400 hover:text-red-500 p-1.5 transition" title="حذف الطلب">
               <i class="fa-solid fa-trash-can text-sm"></i>
             </button>

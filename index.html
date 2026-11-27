@@ -1449,6 +1449,29 @@
       });
     }
 
+    // Anonymous device ID (anti-fake orders): same device = same ID, even if the phone number changes
+    function getDeviceId() {
+      const KEY = "magne_did";
+      let id = null;
+      try { id = localStorage.getItem(KEY); } catch (e) {}
+      if (!id) {
+        id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+          : "d-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+        try { localStorage.setItem(KEY, id); } catch (e) {}
+        try { document.cookie = KEY + "=" + id + "; max-age=31536000; path=/; SameSite=Lax"; } catch (e) {}
+      }
+      return id;
+    }
+    // Restore from cookie if localStorage was cleared
+    (function restoreDeviceId() {
+      try {
+        if (!localStorage.getItem("magne_did")) {
+          const m = document.cookie.match(/(?:^|; )magne_did=([A-Za-z0-9-]{8,64})/);
+          if (m) localStorage.setItem("magne_did", m[1]);
+        }
+      } catch (e) {}
+    })();
+
     // Pack Selector
     let selectedPackData = { count: 2, price: 299, title: "باك 2 أزواج (الأكثر مبيعاً)" };
 
@@ -1682,6 +1705,7 @@
         utmSource: utmSource || "Landing Page",
         utmCampaign: utmCampaign || null,
         adSet: adSet || null,
+        deviceId: getDeviceId(),
         date: new Date().toLocaleDateString('fr-FR'),
         time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
         timestamp: new Date().toISOString()

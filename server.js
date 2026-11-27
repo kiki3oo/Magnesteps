@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5500;
 const BASE_DIR = __dirname;
 const DATA_DIR = process.env.DATA_DIR || path.join(BASE_DIR, 'data');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
+const BLOCKLIST_FILE = path.join(DATA_DIR, 'blocklist.json');
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 const ADMIN_ENABLED = ADMIN_PASSWORD.length >= 8;
 
@@ -25,6 +26,11 @@ const PACKS = {
 };
 
 const ALLOWED_STATUSES = ['en_attente', 'confirme', 'en_livraison', 'livre', 'annule'];
+
+// Anti-fake orders (modifiables via variables d'environnement)
+const MAX_ORDERS_PER_DEVICE_24H = Number(process.env.MAX_ORDERS_PER_DEVICE_24H) || 2;
+const MAX_ORDERS_PER_PHONE_24H = Number(process.env.MAX_ORDERS_PER_PHONE_24H) || 1;
+const MAX_ORDERS_PER_IP_24H = Number(process.env.MAX_ORDERS_PER_IP_24H) || 10;
 
 if (!ADMIN_ENABLED) {
   console.warn('[SECURITE] ADMIN_PASSWORD absent ou trop court (min 8 caracteres) : le panneau admin est DESACTIVE.');
@@ -59,6 +65,70 @@ function saveOrders(orders) {
   const tmp = ORDERS_FILE + '.tmp';
   fs.writeFileSync(tmp, JSON.stringify(orders, null, 2), 'utf8');
   fs.renameSync(tmp, ORDERS_FILE);
+}
+
+function getBlocklist() {
+  try {
+    const b = JSON.parse(fs.readFileSync(BLOCKLIST_FILE, 'utf8'));
+    return { phones: b.phones || [], devices: b.devices || [], ips: b.ips || [] };
+  } catch (e) {
+    return { phones: [], devices: [], ips: [] };
+  }
+}
+
+function saveBlocklist(b) {
+  const tmp = BLOCKLIST_FILE + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(b, null, 2), 'utf8');
+  fs.renameSync(tmp, BLOCKLIST_FILE);
+}
+
+// Normalise un numero marocain : 0612345678 / +212612345678 -> 0612345678
+function normPhone(p) {
+  const d = String(p || '').replace(/\D/g, '');
+  if (d.startsWith('212') && d.length === 12) return '0' + d.slice(3);
+  return d;
+}
+
+function isBlocked(order, bl) {
+  return (order.phone && bl.phones.includes(normPhone(order.phone))) ||
+    (order.deviceId && bl.devices.includes(order.deviceId)) ||
+    (order.ip && bl.ips.includes(order.ip));
+}
+
+// Raison de rejet silencieux d'une commande publique (null = OK)
+function fraudReason(order, orders) {
+  const bl = getBlocklist();
+  if (isBlocked(order, bl)) return 'blocked';
+  const since = Date.now() - 24 * 60 * 60 * 1000;
+  const recent = orders.filter(o => o.timestamp && Date.parse(o.timestamp) > since);
+  const phone = normPhone(order.phone);
+  if (recent.filter(o => normPhone(o.phone) === phone).length >= MAX_ORDERS_PER_PHONE_24H) return 'duplicate-phone';
+  if (order.deviceId && recent.filter(o => o.deviceId === order.deviceId).length >= MAX_ORDERS_PER_DEVICE_24H) return 'device-limit';
+  if (recent.filter(o => o.ip === order.ip).length >= MAX_ORDERS_PER_IP_24H) return 'ip-limit';
+  return null;
+}
+
+// Ajoute des indicateurs de fraude a chaque commande (pour le panneau admin)
+function withFraudFlags(orders) {
+  const bl = getBlocklist();
+  const byDevice = {}, byIp = {}, byPhone = {}, cancelledPhones = new Set();
+  orders.forEach(o => {
+    if (o.deviceId) byDevice[o.deviceId] = (byDevice[o.deviceId] || 0) + 1;
+    if (o.ip) byIp[o.ip] = (byIp[o.ip] || 0) + 1;
+    const ph = normPhone(o.phone);
+    if (ph) byPhone[ph] = (byPhone[ph] || 0) + 1;
+    if (o.status === 'annule' && ph) cancelledPhones.add(ph);
+  });
+  return orders.map(o => ({
+    ...o,
+    flags: {
+      blocked: Boolean(isBlocked(o, bl)),
+      sameDevice: o.deviceId ? byDevice[o.deviceId] - 1 : 0,
+      sameIp: o.ip ? byIp[o.ip] - 1 : 0,
+      samePhone: (byPhone[normPhone(o.phone)] || 1) - 1,
+      phoneCancelledBefore: o.status !== 'annule' && cancelledPhones.has(normPhone(o.phone))
+    }
+  }));
 }
 
 // ================= SECURITE =================
@@ -97,9 +167,16 @@ function recordLoginFail(ip) {
   if (loginFails.size > 5000) loginFails.clear();
 }
 
+// Derriere Easypanel (Traefik), le proxy AJOUTE la vraie IP a la fin de X-Forwarded-For.
+// Les valeurs au debut peuvent etre inventees par le client : on prend donc la derniere.
+// TRUSTED_PROXY_HOPS = nombre de proxys de confiance (1 = Traefik seul, 2 = Cloudflare + Traefik...)
+const TRUSTED_PROXY_HOPS = Number(process.env.TRUSTED_PROXY_HOPS || 1);
 function clientIp(req) {
-  const fwd = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
-  return fwd || req.socket.remoteAddress || 'unknown';
+  const direct = String(req.socket.remoteAddress || 'unknown').replace(/^::ffff:/, '');
+  if (TRUSTED_PROXY_HOPS < 1) return direct;
+  const list = String(req.headers['x-forwarded-for'] || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (!list.length) return direct;
+  return list[Math.max(0, list.length - TRUSTED_PROXY_HOPS)].replace(/^::ffff:/, '');
 }
 
 function cleanText(v, max) {
@@ -145,7 +222,7 @@ function newOrderId() {
 }
 
 // Construit une commande publique a partir des seuls champs autorises
-function buildPublicOrder(input) {
+function buildPublicOrder(input, ip, userAgent) {
   let count = parseInt(input.packCount, 10);
   if (!PACKS[count]) {
     // compatibilite : deduire le pack depuis le prix envoye
@@ -173,6 +250,9 @@ function buildPublicOrder(input) {
       utmSource: cleanText(input.utmSource, 100) || 'Landing Page',
       utmCampaign: cleanText(input.utmCampaign, 100) || null,
       adSet: cleanText(input.adSet, 100) || null,
+      deviceId: /^[A-Za-z0-9-]{8,64}$/.test(String(input.deviceId || '')) ? String(input.deviceId) : null,
+      ip,
+      userAgent: cleanText(userAgent, 200),
       date: now.toLocaleDateString('fr-FR', { timeZone: 'Africa/Casablanca' }),
       time: now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Casablanca' }),
       timestamp: now.toISOString()
@@ -299,6 +379,7 @@ const server = http.createServer((req, res) => {
             price: Number(input.price) || 0,
             status: ALLOWED_STATUSES.includes(input.status) ? input.status : 'en_attente'
           };
+          delete order.flags; // calcule par le serveur, jamais stocke
           const idx = orders.findIndex(o => o.id === order.id);
           if (idx !== -1) {
             orders[idx] = { ...orders[idx], ...order };
@@ -314,9 +395,16 @@ const server = http.createServer((req, res) => {
         if (input.website || input.b_extra_hp) return sendJson(res, 201, { success: true }); // honeypot (bots)
         if (rateLimited(ip)) return sendJson(res, 429, { success: false, error: 'Trop de commandes, reessayez plus tard' });
 
-        const built = buildPublicOrder(input);
+        const built = buildPublicOrder(input, ip, req.headers['user-agent']);
         if (built.error) return sendJson(res, 400, { success: false, error: built.error });
         const order = built.order;
+
+        // Fake orders : on repond "succes" sans enregistrer, pour ne pas alerter le fraudeur
+        const reason = fraudReason(order, orders);
+        if (reason) {
+          console.log(`[Anti-fraude] Commande ignoree (${reason}) ip=${ip} device=${order.deviceId || '-'}`);
+          return sendJson(res, 201, { success: true, order: { id: order.id, price: order.price, pack: order.pack } });
+        }
 
         orders.unshift(order);
         saveOrders(orders);
@@ -330,7 +418,7 @@ const server = http.createServer((req, res) => {
     // Lire / modifier / supprimer = admin uniquement
     if (!admin) return sendJson(res, 401, { success: false, error: 'Non autorise' });
 
-    if (req.method === 'GET') return sendJson(res, 200, getOrders());
+    if (req.method === 'GET') return sendJson(res, 200, withFraudFlags(getOrders()));
 
     if (req.method === 'PUT') {
       return readBody(req, res, ({ id, status, notes }) => {
@@ -355,6 +443,51 @@ const server = http.createServer((req, res) => {
     }
 
     return sendJson(res, 405, { error: 'Methode non autorisee' });
+  }
+
+  // ================= BLOCKLIST (admin) =================
+  // POST /api/block  { orderId, block: true|false, blockIp: true|false }
+  // Bloque (ou debloque) le telephone et l'appareil de cette commande (+ l'IP si blockIp)
+  if (pathname === '/api/block') {
+    const ip = clientIp(req);
+    if (req.headers['x-admin-key'] && loginBlocked(ip)) return sendJson(res, 429, { success: false, error: 'Trop de tentatives' });
+    if (!isAdmin(req)) {
+      if (req.headers['x-admin-key']) recordLoginFail(ip);
+      return sendJson(res, 401, { success: false, error: 'Non autorise' });
+    }
+    if (req.method === 'GET') return sendJson(res, 200, getBlocklist());
+    if (req.method !== 'POST') return sendJson(res, 405, { error: 'Methode non autorisee' });
+    return readBody(req, res, ({ orderId, block, blockIp }) => {
+      const orders = getOrders();
+      const o = orders.find(x => x.id === orderId);
+      if (!o) return sendJson(res, 404, { success: false, error: 'Commande introuvable' });
+      const bl = getBlocklist();
+      const items = [['phones', normPhone(o.phone)], ['devices', o.deviceId], ['ips', o.ip]];
+      // Tous les numeros utilises depuis le meme appareil sont bloques/debloques ensemble
+      if (o.deviceId) {
+        orders.filter(x => x.deviceId === o.deviceId && x.phone)
+          .forEach(x => items.push(['phones', normPhone(x.phone)]));
+      }
+      items.forEach(([key, val]) => {
+        if (!val) return;
+        if (block !== false) {
+          if (key === 'ips' && !blockIp) return; // IP partagee possible (4G) : seulement si demande
+          if (!bl[key].includes(val)) bl[key].push(val);
+        } else {
+          bl[key] = bl[key].filter(v => v !== val);
+        }
+      });
+      saveBlocklist(bl);
+      if (block !== false) {
+        // Les commandes du meme telephone/appareil passent en "annule"
+        const ph = normPhone(o.phone);
+        orders.forEach(x => {
+          if ((normPhone(x.phone) === ph || (o.deviceId && x.deviceId === o.deviceId)) && x.status === 'en_attente') x.status = 'annule';
+        });
+        saveOrders(orders);
+      }
+      return sendJson(res, 200, { success: true, blocked: block !== false });
+    });
   }
 
   // ================= STATIC =================
