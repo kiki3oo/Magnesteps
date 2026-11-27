@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel: MagneSteps Maroc -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2657670258031279');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2657670258031279&ev=PageView&noscript=1" alt=""></noscript>
   <title>MagneSteps™ - فرشات القدمين المغناطيسية الطبية | راحة تامة وتخفيف فوري للآلام</title>
   <link rel="icon" type="image/png" href="favicon.png">
   
@@ -1441,6 +1453,16 @@
       } catch (e) {}
     })();
 
+    // Meta Pixel: InitiateCheckout once, when the visitor starts filling the order form
+    document.addEventListener("focusin", function onFirstFormFocus(e) {
+      const form = document.getElementById("codOrderForm");
+      if (!form || !form.contains(e.target)) return;
+      document.removeEventListener("focusin", onFirstFormFocus);
+      if (typeof fbq === "function") {
+        fbq('track', 'InitiateCheckout', { value: selectedPackData.price, currency: 'MAD', content_ids: ['MAGNE-STEPS-01'], content_type: 'product', num_items: selectedPackData.count });
+      }
+    });
+
     // Pack Selector
     let selectedPackData = { count: 2, price: 299, title: "باك 2 أزواج (الأكثر طلباً)" };
 
@@ -1689,6 +1711,17 @@
           body: JSON.stringify(orderData)
         }).then(res => res.json()).then(data => {
           console.log("Order saved on server:", data);
+          // Meta Pixel: Purchase only for orders really saved by the server (fake/duplicate orders are not sent)
+          if (data && data.success && data.tracked && data.order && typeof fbq === "function") {
+            fbq('track', 'Purchase', {
+              value: data.order.price,
+              currency: 'MAD',
+              content_name: data.order.pack,
+              content_ids: ['MAGNE-STEPS-01'],
+              content_type: 'product',
+              num_items: data.order.packCount || 1
+            }, { eventID: data.order.id });
+          }
         }).catch(err => {
           console.warn("API save warning (will fallback to localStorage):", err);
         });

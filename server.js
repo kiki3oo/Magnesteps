@@ -411,7 +411,8 @@ const server = http.createServer((req, res) => {
         forwardToSanadokom(order);
         console.log(`[Order Saved] ${order.id} - ${order.price} DH`);
         // On ne renvoie au navigateur que le strict minimum
-        return sendJson(res, 201, { success: true, order: { id: order.id, price: order.price, pack: order.pack } });
+        // tracked = commande reellement enregistree -> le navigateur peut envoyer "Purchase" au pixel
+        return sendJson(res, 201, { success: true, tracked: true, order: { id: order.id, price: order.price, pack: order.pack, packCount: order.packCount } });
       });
     }
 
