@@ -251,6 +251,11 @@ function buildPublicOrder(input, ip, userAgent) {
       utmCampaign: cleanText(input.utmCampaign, 100) || null,
       adSet: cleanText(input.adSet, 100) || null,
       deviceId: /^[A-Za-z0-9-]{8,64}$/.test(String(input.deviceId || '')) ? String(input.deviceId) : null,
+      // Meta: shared event ID (browser pixel <-> Sanadokom CAPI) + click/browser IDs for matching
+      eventId: /^lead_\d{10,16}_[a-z0-9]{1,12}$/.test(String(input.eventId || '')) ? String(input.eventId) : null,
+      fbc: /^fb\.\d\.\d{10,16}\.[A-Za-z0-9_\-]{1,500}$/.test(String(input.fbc || '')) ? String(input.fbc) : null,
+      fbp: /^fb\.\d\.\d{10,16}\.\d{1,25}$/.test(String(input.fbp || '')) ? String(input.fbp) : null,
+      sourceUrl: /^https?:\/\//.test(String(input.sourceUrl || '')) ? cleanText(input.sourceUrl, 1000) : null,
       ip,
       userAgent: cleanText(userAgent, 200),
       date: now.toLocaleDateString('fr-FR', { timeZone: 'Africa/Casablanca' }),
@@ -291,7 +296,14 @@ function forwardToSanadokom(order) {
       source: order.utmSource || 'MagneSteps Landing Page',
       utmSource: order.utmSource || null,
       utmCampaign: order.utmCampaign || null,
-      adSet: order.adSet || null
+      adSet: order.adSet || null,
+      // Meta Conversions API (Lead dedup with the browser pixel + matching)
+      eventId: order.eventId || null,
+      fbc: order.fbc || null,
+      fbp: order.fbp || null,
+      sourceUrl: order.sourceUrl || null,
+      clientIpAddress: order.ip || null,
+      clientUserAgent: order.userAgent || null
     });
 
     const isHttps = url.protocol === 'https:';

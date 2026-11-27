@@ -1643,6 +1643,13 @@
       const utmCampaign = urlParams.get('utm_campaign') || urlParams.get('campaign');
       const adSet = urlParams.get('adset') || urlParams.get('ad_set') || urlParams.get('adgroup');
 
+      // Meta deduplication: ONE event ID, shared by the browser pixel (Lead) and Sanadokom (server Lead)
+      const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+      const readCookie = (n) => { const m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; };
+      const fbclid = urlParams.get('fbclid');
+      const fbc = readCookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : null);
+      const fbp = readCookie('_fbp');
+
       const orderData = {
         id: "CMD-" + Date.now().toString().slice(-6),
         name,
@@ -1656,6 +1663,10 @@
         utmCampaign: utmCampaign || null,
         adSet: adSet || null,
         deviceId: getDeviceId(),
+        eventId: eventId,
+        fbc: fbc,
+        fbp: fbp,
+        sourceUrl: location.href,
         date: new Date().toLocaleDateString('fr-FR'),
         time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
         timestamp: new Date().toISOString()
@@ -1670,16 +1681,11 @@
           body: JSON.stringify(orderData)
         }).then(res => res.json()).then(data => {
           console.log("Order saved on server:", data);
-          // Meta Pixel: Purchase only for orders really saved by the server (fake/duplicate orders are not sent)
+          // Meta Pixel: Lead only for orders really saved by the server (fake/duplicate orders are not sent).
+          // Same eventID as the server-side Lead sent by Sanadokom -> Meta counts it once.
+          // Purchase is sent by Sanadokom (CAPI) on delivery only.
           if (data && data.success && data.tracked && data.order && typeof fbq === "function") {
-            fbq('track', 'Purchase', {
-              value: data.order.price,
-              currency: 'MAD',
-              content_name: data.order.pack,
-              content_ids: ['MAGNE-STEPS-01'],
-              content_type: 'product',
-              num_items: data.order.packCount || 1
-            }, { eventID: data.order.id });
+            fbq('track', 'Lead', { value: data.order.price, currency: 'MAD' }, { eventID: eventId });
           }
         }).catch(err => {
           console.warn("API save warning (will fallback to localStorage):", err);
