@@ -329,7 +329,7 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon'
 };
 // Seuls ces fichiers JS sont publics (jamais server.js, api.php, orders.json...)
-const PUBLIC_JS = new Set(['/product-img.js', '/trim-img.js']);
+const PUBLIC_JS = new Set([]); // aucun fichier JS public pour l'instant
 
 function isPublicPath(p) {
   if (p.split('/').some(seg => seg.startsWith('.'))) return false; // .git, .env, .htaccess...
