@@ -283,7 +283,7 @@
           <i class="fa-solid fa-truck-fast"></i>
         </div>
         <h4 class="font-bold text-white text-sm">توصيل سريع ومجاني</h4>
-        <p class="text-xs text-slate-400 mt-0.5">24 إلى 48 ساعة حتى لباب الدار</p>
+        <p class="text-xs text-slate-400 mt-0.5">24-48 ساعة فالمدن الكبرى، 2-4 أيام للمدن الصغيرة</p>
       </div>
 
       <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex flex-col items-center">
@@ -801,7 +801,7 @@
         <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 drop-shadow-sm">
           استمارة الطلب السريع والدفع عند الاستلام
         </h3>
-        <p class="text-slate-600 text-xs md:text-sm mt-1.5 font-medium">عمر معلوماتك دابا، والتوصيل كيوصلك حتى للدار فـ 24 إلى 48 ساعة</p>
+        <p class="text-slate-600 text-xs md:text-sm mt-1.5 font-medium">عمر معلوماتك دابا، والتوصيل كيوصلك حتى للدار: 24 إلى 48 ساعة فالمدن الكبرى، و2 حتى 4 أيام فالمدن الصغيرة</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
@@ -1166,7 +1166,7 @@
             <i id="faq-icon-2" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
           </h4>
           <p id="faq-ans-2" class="text-xs text-slate-600 mt-2.5 leading-relaxed hidden">
-            التوصيل كياخد ما بين 24 إلى 48 ساعة فقط كيوصلك الليفرور حتى لباب الدار أو مقر العمل ديالك فجميع مدن المغرب.
+            فالمدن الكبرى (الدار البيضاء، الرباط، طنجة، مراكش، فاس، أكادير...) التوصيل كياخد 24 حتى 48 ساعة. فالمدن الصغيرة والمناطق البعيدة كياخد 2 حتى 4 أيام. الليفرور كيعيط ليك قبل ما يجي، وكيوصلك حتى لباب الدار أو مقر العمل ديالك فجميع مدن المغرب.
           </p>
         </div>
 
@@ -1333,7 +1333,7 @@
       setupDeliveryDate();
     });
 
-    // Delivery window (realistic: 1 to 3 working days, no delivery on Sunday)
+    // Delivery window (realistic: 1 to 4 working days, no delivery on Sunday)
     function setupDeliveryDate() {
       const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو', 'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نونبر', 'دجنبر'];
 
@@ -1346,7 +1346,7 @@
         return d;
       }
       const from = addWorkingDays(new Date(), 1);
-      const to = addWorkingDays(new Date(), 3);
+      const to = addWorkingDays(new Date(), 4);
       const formatted = from.getMonth() === to.getMonth()
         ? `بين ${from.getDate()} و${to.getDate()} ${months[to.getMonth()]}`
         : `بين ${from.getDate()} ${months[from.getMonth()]} و${to.getDate()} ${months[to.getMonth()]}`;
